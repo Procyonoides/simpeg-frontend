@@ -1,0 +1,64 @@
+.page-container {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #263238;
+      margin: 0 0 4px;
+    }
+
+    p {
+      font-size: 13px;
+      color: #90a4ae;
+      margin: 0;
+    }
+  }
+
+  .form-card {
+    margin-bottom: 20px;
+    background: white !important;
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+    }
+  }
+
+  .table-card {
+    background: white !important;
+
+    table {
+      width: 100%;
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    th {
+      font-weight: 600;
+      color: #546e7a;
+      font-size: 12px;
+    }
+
+    td {
+      color: #263238;
+      font-size: 14px;
+    }
+  }
+}

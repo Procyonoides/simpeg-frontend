@@ -1,0 +1,12 @@
+<div class="header">
+  <div class="header-left">
+    <span class="page-title">{{ title }}</span>
+  </div>
+  <div class="header-right">
+    <span class="user-name">{{ user?.username }}</span>
+    <span class="user-role">{{ user?.role }}</span>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</div>

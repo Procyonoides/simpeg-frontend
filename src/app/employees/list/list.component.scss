@@ -1,0 +1,38 @@
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.page-container {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 { font-size: 18px; font-weight: 600; color: #263238; margin: 0 0 4px; }
+    p { font-size: 13px; color: #90a4ae; margin: 0; }
+  }
+
+  .table-card {
+    table { width: 100%; }
+    .loading { display: flex; justify-content: center; padding: 32px; }
+
+    .search-field {
+      width: 300px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+
+      &.active { background: #e8f5e9; color: #2e7d32; }
+      &.resigned { background: #fff3e0; color: #e65100; }
+      &.terminated { background: #ffebee; color: #c62828; }
+    }
+  }
+}

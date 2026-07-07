@@ -1,0 +1,66 @@
+.dashboard {
+  .welcome {
+    margin-bottom: 24px;
+
+    h2 {
+      font-size: 20px;
+      color: #263238;
+      margin: 0 0 4px;
+    }
+
+    p {
+      font-size: 13px;
+      color: #90a4ae;
+      margin: 0;
+    }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+
+    .stat-card {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-radius: 8px !important;
+
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      .stat-info {
+        .stat-value {
+          font-size: 28px;
+          font-weight: 700;
+          color: #263238;
+          line-height: 1;
+        }
+
+        .stat-label {
+          font-size: 12px;
+          color: #90a4ae;
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+}
+
+:host ::ng-deep .mat-mdc-card {
+  background-color: rgb(226, 226, 226) !important;
+  color: #263238 !important;
+}

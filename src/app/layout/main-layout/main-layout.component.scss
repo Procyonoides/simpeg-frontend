@@ -1,0 +1,15 @@
+.main-layout {
+  display: flex;
+
+  .content-area {
+    margin-left: 240px;
+    flex: 1;
+    min-height: 100vh;
+    background: #f5f6fa;
+
+    .page-content {
+      margin-top: 60px;
+      padding: 24px;
+    }
+  }
+}

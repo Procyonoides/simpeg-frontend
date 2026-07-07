@@ -1,0 +1,147 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <div>
+      <h2>Detail Karyawan</h2>
+      <p>Informasi lengkap data karyawan</p>
+    </div>
+    <div class="header-actions">
+      <button mat-button (click)="onBack()">
+        <mat-icon>arrow_back</mat-icon> Kembali
+      </button>
+      <button mat-raised-button color="primary" (click)="onEdit()">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="employee && !loading">
+
+    <!-- Info Header -->
+    <mat-card class="profile-card">
+      <mat-card-content>
+        <div class="profile-header">
+          <div class="avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="profile-info">
+            <h3>{{ employee.full_name }}</h3>
+            <p>{{ employee.position_name || 'Belum ada jabatan' }} — {{ employee.department_name || '-' }}</p>
+            <span class="badge" [ngClass]="employee.status">
+              {{ employee.status === 'active' ? 'Aktif' : employee.status === 'resigned' ? 'Resign' : 'Terminated' }}
+            </span>
+          </div>
+          <div class="profile-meta">
+            <div class="meta-item">
+              <span class="label">NIK Karyawan</span>
+              <span class="value">{{ employee.employee_code }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="label">Tanggal Masuk</span>
+              <span class="value">{{ formatDate(employee.join_date) }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="label">Tipe Kontrak</span>
+              <span class="value">{{ employee.contract_type || '-' }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="detail-grid">
+
+      <!-- Data Pribadi -->
+      <mat-card class="detail-card">
+        <mat-card-header>
+          <mat-card-title>Data Pribadi</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="label">Jenis Kelamin</span>
+              <span class="value">{{ employee.gender === 'male' ? 'Laki-laki' : 'Perempuan' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Tempat, Tgl Lahir</span>
+              <span class="value">{{ employee.birth_place }}, {{ formatDate(employee.birth_date) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Agama</span>
+              <span class="value">{{ employee.religion || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Pendidikan</span>
+              <span class="value">{{ employee.education || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">No KTP</span>
+              <span class="value">{{ employee.nik || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">No KK</span>
+              <span class="value">{{ employee.no_kk || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Ibu Kandung</span>
+              <span class="value">{{ employee.ibu_kandung || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Alamat</span>
+              <span class="value">{{ employee.address || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">No HP</span>
+              <span class="value">{{ employee.phone || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Email</span>
+              <span class="value">{{ employee.email || '-' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Data Kepegawaian -->
+      <mat-card class="detail-card">
+        <mat-card-header>
+          <mat-card-title>Data Kepegawaian & Pajak</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="label">Departemen</span>
+              <span class="value">{{ employee.department_name || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Jabatan</span>
+              <span class="value">{{ employee.position_name || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Tipe Kontrak</span>
+              <span class="value">{{ employee.contract_type || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Status Pajak</span>
+              <span class="value">{{ employee.tax_status || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">NPWP</span>
+              <span class="value">{{ employee.npwp || '-' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">No Rekening</span>
+              <span class="value">{{ employee.bank_account || '-' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+
+</div>

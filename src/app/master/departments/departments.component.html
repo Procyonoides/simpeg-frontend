@@ -1,0 +1,94 @@
+<div class="page-container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h2>Departemen</h2>
+      <p>Kelola data departemen perusahaan</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="openForm()">
+      <mat-icon>add</mat-icon> Tambah Departemen
+    </button>
+  </div>
+
+  <!-- Form tambah/edit -->
+  <mat-card class="form-card" *ngIf="showForm">
+    <mat-card-header>
+      <mat-card-title>{{ editMode ? 'Edit' : 'Tambah' }} Departemen</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nama Departemen</mat-label>
+            <input matInput formControlName="name" placeholder="contoh: MIXING">
+            <mat-error *ngIf="form.get('name')?.hasError('required')">
+              Nama wajib diisi
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Deskripsi</mat-label>
+            <input matInput formControlName="description" placeholder="Opsional">
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="closeForm()">Batal</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+            {{ editMode ? 'Update' : 'Simpan' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tabel -->
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div *ngIf="loading" class="loading">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+
+      <table mat-table [dataSource]="departments" *ngIf="!loading">
+
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef>No</th>
+          <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nama Departemen</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Deskripsi</th>
+          <td mat-cell *matCellDef="let row">{{ row.description || '-' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Aksi</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="openForm(row)" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(row.id)" matTooltip="Hapus">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4" style="text-align:center; padding: 24px;">
+            Belum ada data departemen
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+</div>

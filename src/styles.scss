@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$simpeg-primary: mat.define-palette(mat.$blue-grey-palette, 700);
+$simpeg-accent: mat.define-palette(mat.$pink-palette, A200);
+$simpeg-warn: mat.define-palette(mat.$red-palette);
+
+$simpeg-theme: mat.define-light-theme((
+  color: (
+    primary: $simpeg-primary,
+    accent: $simpeg-accent,
+    warn: $simpeg-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($simpeg-theme);
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #f5f6fa;
+}
