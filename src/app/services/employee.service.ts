@@ -10,8 +10,8 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAll(page = 1, limit = 20, search = ''): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?page=${page}&limit=${limit}&search=${search}`);
   }
 
   getById(id: number): Observable<any> {
@@ -28,5 +28,13 @@ export class EmployeeService {
 
   delete(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
+  toggleStatus(id: number, status: string): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/${id}/status`, { status });
+  }
+
+  deletePermanent(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}/permanent`);
   }
 }

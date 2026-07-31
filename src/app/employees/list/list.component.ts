@@ -3,16 +3,28 @@ import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
   employees: any[] = [];
   loading = false;
+  showDeleteMode = false;
   searchText = '';
+  searchSubject = new Subject<string>();
+  Math = Math;
+
+  // Pagination
+  currentPage = 1;
+  pageSize = 10;
+  pageSizeOptions = [10, 20, 50, 100];
+  totalRecords = 0;
+  totalPages = 0;
 
   displayedColumns = ['no', 'employee_code', 'full_name', 'department', 'position', 'status', 'actions'];
 
@@ -23,53 +35,87 @@ export class ListComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  ngOnInit() { this.loadEmployees(); }
+  ngOnInit() {
+    this.loadEmployees();
 
-  loadEmployees() {
-    this.loading = true;
-    this.employeeService.getAll().subscribe({
-      next: (data) => { this.employees = data; this.loading = false; },
-      error: () => { this.snackBar.open('Gagal memuat data', 'Tutup', { duration: 3000 }); this.loading = false; }
+    // Debounce search
+    this.searchSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(search => {
+      this.currentPage = 1;
+      this.loadEmployees(search);
     });
   }
 
-  get filteredEmployees() {
-    if (!this.searchText) return this.employees;
-    const q = this.searchText.toLowerCase();
-    return this.employees.filter(e =>
-      e.full_name?.toLowerCase().includes(q) ||
-      e.employee_code?.toLowerCase().includes(q) ||
-      e.department_name?.toLowerCase().includes(q)
-    );
+  loadEmployees(search = '') {
+    this.loading = true;
+    this.employeeService.getAll(this.currentPage, this.pageSize, search).subscribe({
+      next: (res) => {
+        this.employees = res.data;
+        this.totalRecords = res.pagination.total;
+        this.totalPages = res.pagination.totalPages;
+        this.loading = false;
+      },
+      error: () => {
+        this.snackBar.open('Gagal memuat data', 'Tutup', { duration: 3000 });
+        this.loading = false;
+      }
+    });
+  }
+
+  onSearch() {
+    this.searchSubject.next(this.searchText);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadEmployees(this.searchText);
+  }
+
+  onPageSizeChange(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
+    this.loadEmployees(this.searchText);
   }
 
   onAdd() { this.router.navigate(['/employees/form']); }
   onEdit(id: number) { this.router.navigate(['/employees/form', id]); }
   onDetail(id: number) { this.router.navigate(['/employees/detail', id]); }
 
-  onDelete(id: number) {
-    if (!confirm('Yakin ingin menonaktifkan karyawan ini?')) return;
-    this.employeeService.delete(id).subscribe({
-      next: () => { this.snackBar.open('Karyawan berhasil dinonaktifkan', 'Tutup', { duration: 3000 }); this.loadEmployees(); },
+  onToggleStatus(employee: any) {
+    const newStatus = employee.status === 'active' ? 'resigned' : 'active';
+    if (!confirm(newStatus === 'active' ? 'Aktifkan kembali?' : 'Nonaktifkan karyawan ini?')) return;
+    this.employeeService.toggleStatus(employee.id, newStatus).subscribe({
+      next: () => {
+        this.snackBar.open(newStatus === 'active' ? 'Karyawan diaktifkan' : 'Karyawan dinonaktifkan', 'Tutup', { duration: 3000 });
+        this.loadEmployees(this.searchText);
+      },
       error: () => this.snackBar.open('Gagal', 'Tutup', { duration: 3000 })
     });
   }
 
-  // Tambah method import
+  onDeletePermanent(id: number) {
+    if (!confirm('⚠️ HAPUS PERMANEN?')) return;
+    if (!confirm('Konfirmasi sekali lagi — yakin?')) return;
+    this.employeeService.deletePermanent(id).subscribe({
+      next: () => {
+        this.snackBar.open('Dihapus permanen', 'Tutup', { duration: 3000 });
+        this.loadEmployees(this.searchText);
+      },
+      error: () => this.snackBar.open('Gagal', 'Tutup', { duration: 3000 })
+    });
+  }
+
   onImport(event: any) {
     const file = event.target.files[0];
     if (!file) return;
-
     const formData = new FormData();
     formData.append('file', file);
-
     this.loading = true;
     this.http.post('http://localhost:3000/api/import/employees', formData).subscribe({
       next: (res: any) => {
-        this.snackBar.open(
-          `Import selesai: ${res.success} berhasil, ${res.skipped} dilewati`,
-          'Tutup', { duration: 5000 }
-        );
+        this.snackBar.open(`Import selesai: ${res.success} berhasil, ${res.skipped} dilewati`, 'Tutup', { duration: 5000 });
         this.loadEmployees();
       },
       error: () => {
@@ -79,4 +125,11 @@ export class ListComponent implements OnInit {
     });
   }
 
+  get pages(): number[] {
+    const pages = [];
+    const start = Math.max(1, this.currentPage - 2);
+    const end = Math.min(this.totalPages, this.currentPage + 2);
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+  }
 }

@@ -10,6 +10,11 @@
     </button>
   </div>
 
+  <div class="required-note">
+    <mat-icon>info</mat-icon>
+    <span>Field bertanda <strong>*</strong> wajib diisi</span>
+  </div>
+
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <!-- Data Pribadi -->
@@ -21,28 +26,30 @@
         <div class="form-grid">
 
           <mat-form-field appearance="outline">
-            <mat-label>NIK Karyawan</mat-label>
+            <mat-label>NIK Karyawan *</mat-label>
             <input matInput formControlName="employee_code">
             <mat-error *ngIf="form.get('employee_code')?.hasError('required')">Wajib diisi</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Nama Lengkap</mat-label>
+            <mat-label>Nama Lengkap *</mat-label>
             <input matInput formControlName="full_name">
             <mat-error *ngIf="form.get('full_name')?.hasError('required')">Wajib diisi</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Jenis Kelamin</mat-label>
+            <mat-label>Jenis Kelamin *</mat-label>
             <mat-select formControlName="gender">
               <mat-option value="male">Laki-laki</mat-option>
               <mat-option value="female">Perempuan</mat-option>
             </mat-select>
+            <mat-error *ngIf="form.get('gender')?.hasError('required')">Wajib dipilih</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Tempat Lahir</mat-label>
             <input matInput formControlName="birth_place">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -50,6 +57,7 @@
             <input matInput [matDatepicker]="dpBirth" formControlName="birth_date">
             <mat-datepicker-toggle matIconSuffix [for]="dpBirth"></mat-datepicker-toggle>
             <mat-datepicker #dpBirth></mat-datepicker>
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -62,6 +70,7 @@
               <mat-option value="BUDDHA">Buddha</mat-option>
               <mat-option value="KONGHUCU">Konghucu</mat-option>
             </mat-select>
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -75,36 +84,43 @@
               <mat-option value="S1">S1</mat-option>
               <mat-option value="S2">S2</mat-option>
             </mat-select>
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>No KTP</mat-label>
             <input matInput formControlName="nik">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>No KK</mat-label>
             <input matInput formControlName="no_kk">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>No HP</mat-label>
             <input matInput formControlName="phone">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Nama Ibu Kandung</mat-label>
             <input matInput formControlName="ibu_kandung">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-col">
             <mat-label>Alamat</mat-label>
             <textarea matInput formControlName="address" rows="2"></textarea>
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
         </div>
@@ -120,7 +136,7 @@
         <div class="form-grid">
 
           <mat-form-field appearance="outline">
-            <mat-label>Tanggal Masuk</mat-label>
+            <mat-label>Tanggal Masuk *</mat-label>
             <input matInput [matDatepicker]="dpJoin" formControlName="join_date">
             <mat-datepicker-toggle matIconSuffix [for]="dpJoin"></mat-datepicker-toggle>
             <mat-datepicker #dpJoin></mat-datepicker>
@@ -133,44 +149,52 @@
               <mat-option value="PKWT">PKWT (Kontrak)</mat-option>
               <mat-option value="PKWTT">PKWTT (Tetap)</mat-option>
             </mat-select>
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Status Pajak</mat-label>
             <mat-select formControlName="tax_status">
-              <mat-option value="TK/0">TK/0</mat-option>
-              <mat-option value="TK/1">TK/1</mat-option>
-              <mat-option value="TK/2">TK/2</mat-option>
-              <mat-option value="TK/3">TK/3</mat-option>
-              <mat-option value="K/0">K/0</mat-option>
-              <mat-option value="K/1">K/1</mat-option>
-              <mat-option value="K/2">K/2</mat-option>
-              <mat-option value="K/3">K/3</mat-option>
+              <mat-option value="TK/0">TK/0 — Tidak Kawin, 0 tanggungan</mat-option>
+              <mat-option value="TK/1">TK/1 — Tidak Kawin, 1 tanggungan</mat-option>
+              <mat-option value="TK/2">TK/2 — Tidak Kawin, 2 tanggungan</mat-option>
+              <mat-option value="TK/3">TK/3 — Tidak Kawin, 3 tanggungan</mat-option>
+              <mat-option value="K/0">K/0 — Kawin, 0 tanggungan</mat-option>
+              <mat-option value="K/1">K/1 — Kawin, 1 tanggungan</mat-option>
+              <mat-option value="K/2">K/2 — Kawin, 2 tanggungan</mat-option>
+              <mat-option value="K/3">K/3 — Kawin, 3 tanggungan</mat-option>
             </mat-select>
+            <mat-hint>Opsional — untuk perhitungan PPh 21</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>NPWP</mat-label>
             <input matInput formControlName="npwp">
+            <mat-hint>Opsional</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>No Rekening</mat-label>
             <input matInput formControlName="bank_account">
+            <mat-hint>Opsional — untuk transfer gaji</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Departemen</mat-label>
             <mat-select formControlName="department_id">
+              <mat-option value="">-- Pilih Departemen --</mat-option>
               <mat-option *ngFor="let d of departments" [value]="d.id">{{ d.name }}</mat-option>
             </mat-select>
+            <mat-hint>Opsional — bisa diisi nanti</mat-hint>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Jabatan</mat-label>
-            <mat-select formControlName="position_id">
+            <mat-select formControlName="position_id" [disabled]="!form.get('department_id')?.value">
+              <mat-option value="">-- Pilih Jabatan --</mat-option>
               <mat-option *ngFor="let p of filteredPositions" [value]="p.id">{{ p.name }}</mat-option>
             </mat-select>
+            <mat-hint>{{ form.get('department_id')?.value ? 'Opsional' : 'Pilih departemen dulu' }}</mat-hint>
           </mat-form-field>
 
         </div>
@@ -180,7 +204,7 @@
     <!-- Actions -->
     <div class="form-actions">
       <button mat-button type="button" (click)="onCancel()">Batal</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading || form.invalid">
         <mat-spinner *ngIf="loading" diameter="18" style="display:inline-block"></mat-spinner>
         <span *ngIf="!loading">{{ editMode ? 'Update' : 'Simpan' }}</span>
       </button>

@@ -5,6 +5,10 @@
 }
 
 .page-container {
+    .search-field {
+        width: 300px;
+    }
+
   .page-header {
     display: flex;
     justify-content: space-between;
@@ -34,5 +38,58 @@
       &.resigned { background: #fff3e0; color: #e65100; }
       &.terminated { background: #ffebee; color: #c62828; }
     }
+  }
+}
+
+.delete-mode-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff3e0;
+  color: #e65100;
+  padding: 10px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 13px;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+
+  .page-size-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #546e7a;
+
+    mat-select {
+      width: 70px;
+    }
+  }
+
+  .page-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .active-page {
+      background: #1565c0;
+      color: white;
+      border-radius: 4px;
+      min-width: 36px;
+    }
+  }
+
+  .page-info {
+    font-size: 13px;
+    color: #90a4ae;
   }
 }
