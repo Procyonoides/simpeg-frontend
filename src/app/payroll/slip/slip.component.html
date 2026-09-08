@@ -1,0 +1,90 @@
+<div class="page-container">
+
+  <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+    <button mat-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon> Kembali
+    </button>
+    <button mat-stroked-button *ngIf="slip" (click)="print()">
+      <mat-icon>print</mat-icon> Cetak
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="d-flex justify-content-center py-5">
+    <mat-spinner diameter="36"></mat-spinner>
+  </div>
+
+  <div class="text-center text-muted py-5" *ngIf="!loading && !slip">
+    Pilih slip dari halaman detail payroll untuk melihat rinciannya di sini.
+  </div>
+
+  <div class="slip-card card shadow-sm border-0 rounded-3" *ngIf="!loading && slip">
+    <div class="card-body">
+      <div class="slip-header text-center mb-3">
+        <h5 class="fw-bold mb-0">SLIP GAJI</h5>
+        <div class="text-muted">Periode {{ slip.period | date:'MMMM y' }}</div>
+      </div>
+
+      <div class="slip-employee mb-3">
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Nama</span>
+          <span class="fw-bold">{{ slip.employee_name }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Kode Karyawan</span>
+          <span>{{ slip.employee_code }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Jabatan</span>
+          <span>{{ slip.position_name || '-' }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Departemen</span>
+          <span>{{ slip.department_name || '-' }}</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="slip-section">
+        <div class="d-flex justify-content-between">
+          <span>Gaji Pokok</span>
+          <span>Rp {{ slip.basic_salary | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <div class="slip-section mt-2" *ngIf="additions.length > 0">
+        <div class="section-title text-success">Tunjangan</div>
+        <div class="d-flex justify-content-between" *ngFor="let a of additions">
+          <span>{{ a.component_name }}</span>
+          <span>+ Rp {{ a.amount | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <div class="slip-section mt-2" *ngIf="deductions.length > 0">
+        <div class="section-title text-danger">Potongan</div>
+        <div class="d-flex justify-content-between" *ngFor="let d of deductions">
+          <span>{{ d.component_name }}</span>
+          <span>- Rp {{ d.amount | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="d-flex justify-content-between">
+        <span>Gaji Kotor</span>
+        <span>Rp {{ slip.gross_salary | number:'1.0-0' }}</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span>Total Potongan</span>
+        <span>- Rp {{ slip.total_deduction | number:'1.0-0' }}</span>
+      </div>
+
+      <hr>
+
+      <div class="d-flex justify-content-between slip-total">
+        <span class="fw-bold">Gaji Diterima (Net)</span>
+        <span class="fw-bold">Rp {{ slip.net_salary | number:'1.0-0' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

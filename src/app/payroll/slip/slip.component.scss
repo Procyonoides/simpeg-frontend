@@ -1,0 +1,19 @@
+.slip-card {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.slip-total {
+  font-size: 16px;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+@media print {
+  .no-print { display: none !important; }
+}

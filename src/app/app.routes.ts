@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
@@ -19,6 +20,8 @@ export const routes: Routes = [
             },
             {
                 path: 'master',
+                canActivate: [RoleGuard],
+                data: { roles: ['admin'] },
                 loadChildren: () => import('./master/master.module').then(m => m.MasterModule)
             },
             {
@@ -28,6 +31,18 @@ export const routes: Routes = [
             {
                 path: 'leave',
                 loadChildren: () => import('./leave/leave.module').then(m => m.LeaveModule)
+            },
+            {
+                path: 'payroll',
+                canActivate: [RoleGuard],
+                data: { roles: ['admin', 'hr'] },
+                loadChildren: () => import('./payroll/payroll.module').then(m => m.PayrollModule)
+            },
+            {
+                path: 'users',
+                canActivate: [RoleGuard],
+                data: { roles: ['admin'] },
+                loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
             }
         ]
     },

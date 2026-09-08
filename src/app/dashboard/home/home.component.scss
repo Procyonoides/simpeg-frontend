@@ -55,6 +55,44 @@
           color: #90a4ae;
           margin-top: 4px;
         }
+
+        .stat-note {
+          font-size: 10px;
+          margin-top: 2px;
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  .dashboard-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+
+    .panel {
+      padding: 16px;
+      border-radius: 8px !important;
+
+      .panel-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #263238;
+        margin-bottom: 12px;
+      }
+
+      .dept-row, .leave-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        font-size: 13px;
+
+        &:last-child {
+          border-bottom: none;
+        }
       }
     }
   }

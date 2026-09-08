@@ -17,6 +17,9 @@ export class FormComponent implements OnInit {
   employees: any[] = [];
   searchText = '';
 
+  balance: { quota: number; used: number; remaining: number; cycle_start: string; cycle_end: string } | null = null;
+  loadingBalance = false;
+
   constructor(
     private fb: FormBuilder,
     private leaveService: LeaveService,
@@ -33,7 +36,29 @@ export class FormComponent implements OnInit {
     });
   }
 
-  ngOnInit() { this.loadEmployees(); }
+  ngOnInit() {
+    this.loadEmployees();
+
+    this.form.get('employee_id')?.valueChanges.subscribe(() => this.refreshBalance());
+    this.form.get('type')?.valueChanges.subscribe(() => this.refreshBalance());
+  }
+
+  refreshBalance() {
+    const employeeId = this.form.get('employee_id')?.value;
+    const type = this.form.get('type')?.value;
+
+    // Kuota cuma relevan buat tipe "Cuti Tahunan"
+    if (!employeeId || type !== 'annual') {
+      this.balance = null;
+      return;
+    }
+
+    this.loadingBalance = true;
+    this.leaveService.getBalance(employeeId).subscribe({
+      next: (res) => { this.balance = res; this.loadingBalance = false; },
+      error: () => { this.balance = null; this.loadingBalance = false; }
+    });
+  }
 
   loadEmployees() {
     this.employeeService.getAll(1, 9999, '').subscribe({

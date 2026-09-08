@@ -1,0 +1,58 @@
+<div class="page-container">
+
+  <div class="d-flex align-items-center mb-3">
+    <button mat-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon> Kembali
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="d-flex justify-content-center py-5">
+    <mat-spinner diameter="36"></mat-spinner>
+  </div>
+
+  <ng-container *ngIf="!loading && run">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h5 class="fw-bold mb-1">Payroll {{ run.period | date:'MMMM y' }}</h5>
+        <span class="badge" [ngClass]="run.status === 'finalized' ? 'bg-success' : 'bg-warning text-dark'">
+          {{ run.status === 'finalized' ? 'Final' : 'Draft' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-3">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Karyawan</th>
+                <th>Jabatan</th>
+                <th>Gaji Pokok</th>
+                <th>Tunjangan</th>
+                <th>Potongan</th>
+                <th>Gaji Bersih</th>
+                <th class="text-end">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of run.items">
+                <td>{{ item.employee_name }} <span class="text-muted small">({{ item.employee_code }})</span></td>
+                <td>{{ item.position_name || '-' }}</td>
+                <td>Rp {{ item.basic_salary | number:'1.0-0' }}</td>
+                <td class="text-success">+ Rp {{ item.total_allowance | number:'1.0-0' }}</td>
+                <td class="text-danger">- Rp {{ item.total_deduction | number:'1.0-0' }}</td>
+                <td class="fw-bold">Rp {{ item.net_salary | number:'1.0-0' }}</td>
+                <td class="text-end">
+                  <button mat-icon-button (click)="viewSlip(item.id)" matTooltip="Lihat Slip">
+                    <mat-icon>receipt_long</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -39,6 +39,22 @@
             </mat-form-field>
           </div>
 
+          <div class="col-12" *ngIf="form.get('type')?.value === 'annual'">
+            <div class="balance-info" *ngIf="loadingBalance">
+              <mat-spinner diameter="16" style="display:inline-block"></mat-spinner>
+              Mengecek sisa kuota...
+            </div>
+            <div class="balance-info" *ngIf="!loadingBalance && balance">
+              Sisa kuota cuti tahunan: <strong>{{ balance.remaining }}</strong> dari {{ balance.quota }} hari
+              <span class="text-muted">
+                (periode {{ balance.cycle_start | date:'d MMM y' }} – {{ balance.cycle_end | date:'d MMM y' }})
+              </span>
+            </div>
+            <div class="balance-info text-muted" *ngIf="!loadingBalance && !balance && form.get('employee_id')?.value">
+              Pilih karyawan untuk melihat sisa kuota.
+            </div>
+          </div>
+
           <div class="col-md-6">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Tanggal Mulai *</mat-label>

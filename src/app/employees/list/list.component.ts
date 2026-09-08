@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
+import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -27,15 +28,18 @@ export class ListComponent implements OnInit {
   totalPages = 0;
 
   displayedColumns = ['no', 'employee_code', 'full_name', 'department', 'position', 'status', 'actions'];
+  isAdmin = false;
 
   constructor(
     private employeeService: EmployeeService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
     private http: HttpClient
   ) {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.hasRole('admin');
     this.loadEmployees();
 
     // Debounce search

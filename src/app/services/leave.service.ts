@@ -27,4 +27,8 @@ export class LeaveService {
   delete(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  getBalance(employeeId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/balance/${employeeId}`);
+  }
 }

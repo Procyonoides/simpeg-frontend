@@ -1,0 +1,91 @@
+<div class="page-container">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h5 class="fw-bold mb-1">Manajemen User</h5>
+      <span class="text-muted small">Kelola akun admin, HR, dan staff perusahaan</span>
+    </div>
+    <button mat-raised-button color="primary" (click)="showForm = !showForm">
+      <mat-icon>person_add</mat-icon> Tambah User
+    </button>
+  </div>
+
+  <!-- Form tambah user -->
+  <div class="card shadow-sm border-0 rounded-3 mb-3" *ngIf="showForm">
+    <div class="card-body">
+      <div class="row g-2 align-items-end">
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" class="w-100 mb-0">
+            <mat-label>Username</mat-label>
+            <input matInput [(ngModel)]="newUser.username">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" class="w-100 mb-0">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" [(ngModel)]="newUser.password">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" class="w-100 mb-0">
+            <mat-label>Role</mat-label>
+            <mat-select [(ngModel)]="newUser.role">
+              <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <button mat-raised-button color="primary" class="w-100" (click)="onAdd()">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabel user -->
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-0">
+      <div *ngIf="loading" class="d-flex justify-content-center py-5">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+
+      <div class="table-responsive" *ngIf="!loading">
+        <table class="table table-hover table-sm align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th class="text-end">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of users">
+              <td>{{ u.username }}</td>
+              <td>
+                <mat-select [value]="u.role" (selectionChange)="onChangeRole(u, $event.value)"
+                  [disabled]="u.id === currentUserId" style="width: 100px">
+                  <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
+                </mat-select>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="u.is_active ? 'bg-success' : 'bg-secondary'">
+                  {{ u.is_active ? 'Aktif' : 'Nonaktif' }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button mat-icon-button [disabled]="u.id === currentUserId" (click)="onToggleActive(u)"
+                  matTooltip="Aktifkan/Nonaktifkan">
+                  <mat-icon>{{ u.is_active ? 'block' : 'check_circle' }}</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" [disabled]="u.id === currentUserId" (click)="onDelete(u)"
+                  matTooltip="Hapus">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

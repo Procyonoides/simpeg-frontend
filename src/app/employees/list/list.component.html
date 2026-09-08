@@ -7,7 +7,7 @@
       <span class="text-muted small">Total: {{ totalRecords }} karyawan</span>
     </div>
     <div class="d-flex gap-2">
-      <button mat-stroked-button [color]="showDeleteMode ? 'warn' : ''"
+      <button mat-stroked-button *ngIf="isAdmin" [color]="showDeleteMode ? 'warn' : ''"
         (click)="showDeleteMode = !showDeleteMode">
         <mat-icon>{{ showDeleteMode ? 'lock_open' : 'lock' }}</mat-icon>
         {{ showDeleteMode ? 'Mode Hapus Aktif' : 'Mode Hapus' }}

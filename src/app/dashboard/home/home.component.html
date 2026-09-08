@@ -12,6 +12,38 @@
       <div class="stat-info">
         <div class="stat-value">{{ stat.value }}</div>
         <div class="stat-label">{{ stat.label }}</div>
+        <div class="stat-note text-muted" *ngIf="!stat.available">Modul belum tersedia</div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-panels">
+    <mat-card class="panel">
+      <div class="panel-title">Karyawan per Departemen</div>
+      <div class="panel-body" *ngIf="!loading">
+        <div class="dept-row" *ngFor="let d of departmentBreakdown">
+          <span>{{ d.department_name }}</span>
+          <span class="fw-bold">{{ d.total }}</span>
+        </div>
+        <div class="text-muted small" *ngIf="departmentBreakdown.length === 0">
+          Belum ada data jabatan/departemen karyawan.
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="panel">
+      <div class="panel-title">Pengajuan Cuti Terbaru</div>
+      <div class="panel-body" *ngIf="!loading">
+        <div class="leave-row" *ngFor="let l of recentLeave">
+          <div>
+            <div class="fw-bold">{{ l.full_name }}</div>
+            <div class="text-muted small">{{ l.type }} — {{ l.start_date | date:'d MMM' }} s/d {{ l.end_date | date:'d MMM y' }}</div>
+          </div>
+          <span class="badge" [ngClass]="leaveStatusColor(l.status)">{{ l.status }}</span>
+        </div>
+        <div class="text-muted small" *ngIf="recentLeave.length === 0">
+          Belum ada pengajuan cuti.
+        </div>
       </div>
     </mat-card>
   </div>

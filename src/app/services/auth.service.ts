@@ -44,4 +44,9 @@ export class AuthService {
   getCurrentUser() {
     return this.currentUserSubject.value;
   }
+
+  hasRole(...roles: string[]): boolean {
+    const user = this.getCurrentUser();
+    return !!user && roles.includes(user.role);
+  }
 }

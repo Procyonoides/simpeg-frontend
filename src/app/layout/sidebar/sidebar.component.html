@@ -9,7 +9,7 @@
       <span>Dashboard</span>
     </a>
 
-    <div class="nav-group">
+    <div class="nav-group" *ngIf="isAdmin">
       <div class="nav-group-title">MASTER DATA</div>
       <a class="nav-item" routerLink="/master/departments" routerLinkActive="active">
         <mat-icon>business</mat-icon>
@@ -45,15 +45,23 @@
       </a>
     </div>
 
-    <div class="nav-group">
+    <div class="nav-group" *ngIf="isAdminOrHr">
       <div class="nav-group-title">PENGGAJIAN</div>
-      <a class="nav-item" routerLink="/payroll" routerLinkActive="active">
+      <a class="nav-item" routerLink="/payroll" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>account_balance_wallet</mat-icon>
         <span>Proses Gaji</span>
       </a>
       <a class="nav-item" routerLink="/payroll/slip" routerLinkActive="active">
         <mat-icon>receipt_long</mat-icon>
         <span>Slip Gaji</span>
+      </a>
+    </div>
+
+    <div class="nav-group" *ngIf="isAdmin">
+      <div class="nav-group-title">PENGATURAN</div>
+      <a class="nav-item" routerLink="/users" routerLinkActive="active">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Manajemen User</span>
       </a>
     </div>
   </nav>
