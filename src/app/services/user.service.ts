@@ -23,4 +23,12 @@ export class UserService {
   remove(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  bulkCreateEmployeeAccounts(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/bulk-create-employee-accounts`, {});
+  }
+
+  resetEmployeePassword(employeeId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-employee-password/${employeeId}`, {});
+  }
 }

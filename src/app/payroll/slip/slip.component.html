@@ -21,7 +21,7 @@
     <div class="card-body">
       <div class="slip-header text-center mb-3">
         <h5 class="fw-bold mb-0">SLIP GAJI</h5>
-        <div class="text-muted">Periode {{ slip.period | date:'MMMM y' }}</div>
+        <div class="text-muted">Periode {{ monthName(slip.month) }} {{ slip.year }}</div>
       </div>
 
       <div class="slip-employee mb-3">
@@ -70,13 +70,39 @@
 
       <hr>
 
+      <div class="slip-section">
+        <div class="section-title text-danger">Potongan BPJS & Pajak</div>
+        <div class="d-flex justify-content-between">
+          <span>BPJS Kesehatan</span>
+          <span>- Rp {{ slip.bpjsk_employee | number:'1.0-0' }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>BPJS TK - JHT</span>
+          <span>- Rp {{ slip.bpjstk_jht | number:'1.0-0' }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>BPJS TK - JP</span>
+          <span>- Rp {{ slip.bpjstk_jp | number:'1.0-0' }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span>PPh 21</span>
+          <span>- Rp {{ slip.pph21_monthly | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <hr>
+
       <div class="d-flex justify-content-between">
         <span>Gaji Kotor</span>
         <span>Rp {{ slip.gross_salary | number:'1.0-0' }}</span>
       </div>
       <div class="d-flex justify-content-between">
-        <span>Total Potongan</span>
-        <span>- Rp {{ slip.total_deduction | number:'1.0-0' }}</span>
+        <span>Total Potongan Lain</span>
+        <span>- Rp {{ slip.total_deductions | number:'1.0-0' }}</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span>Total BPJS + PPh21</span>
+        <span>- Rp {{ totalBpjsPph21 | number:'1.0-0' }}</span>
       </div>
 
       <hr>

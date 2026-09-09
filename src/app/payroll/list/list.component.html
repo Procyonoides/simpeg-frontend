@@ -12,15 +12,15 @@
 
   <div class="card shadow-sm border-0 rounded-3 mb-3" *ngIf="showGenerateForm">
     <div class="card-body">
-      <div class="row g-2 align-items-end">
+      <div class="row g-2 align-items-start">
         <div class="col-md-4">
           <mat-form-field appearance="outline" class="w-100 mb-0">
             <mat-label>Periode</mat-label>
-            <input matInput type="month" [(ngModel)]="period">
+            <input matInput type="month" [(ngModel)]="periodInput">
           </mat-form-field>
         </div>
         <div class="col-md-4">
-          <button mat-raised-button color="primary" [disabled]="generating" (click)="onGenerate()">
+          <button mat-raised-button color="primary" class="field-action-btn" [disabled]="generating" (click)="onGenerate()">
             <mat-spinner *ngIf="generating" diameter="18" style="display:inline-block"></mat-spinner>
             <span *ngIf="!generating">Proses Payroll</span>
           </button>
@@ -52,7 +52,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let r of runs">
-              <td>{{ r.period | date:'MMMM y' }}</td>
+              <td>{{ monthName(r.month) }} {{ r.year }}</td>
               <td>{{ r.employee_count }}</td>
               <td>Rp {{ r.total_net | number:'1.0-0' }}</td>
               <td>

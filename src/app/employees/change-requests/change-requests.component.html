@@ -1,0 +1,63 @@
+<div class="page-container">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h5 class="fw-bold mb-1">Pengajuan Perubahan Data</h5>
+      <span class="text-muted small">Persetujuan perubahan data karyawan (misal ganti nama)</span>
+    </div>
+    <div>
+      <button mat-button [color]="filter === 'pending' ? 'primary' : ''" (click)="setFilter('pending')">Menunggu</button>
+      <button mat-button [color]="filter === 'all' ? 'primary' : ''" (click)="setFilter('all')">Semua</button>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-0">
+      <div *ngIf="loading" class="d-flex justify-content-center py-5">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+
+      <div class="table-responsive" *ngIf="!loading">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Karyawan</th>
+              <th>Field</th>
+              <th>Dari</th>
+              <th>Menjadi</th>
+              <th>Status</th>
+              <th class="text-end">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of requests">
+              <td>{{ r.employee_name }} <span class="text-muted small">({{ r.employee_code }})</span></td>
+              <td>{{ fieldLabels[r.field_name] || r.field_name }}</td>
+              <td class="text-muted">{{ r.old_value }}</td>
+              <td class="fw-bold">{{ r.new_value }}</td>
+              <td>
+                <span class="badge"
+                  [ngClass]="r.status === 'approved' ? 'bg-success' : r.status === 'rejected' ? 'bg-danger' : 'bg-warning text-dark'">
+                  {{ r.status === 'approved' ? 'Disetujui' : r.status === 'rejected' ? 'Ditolak' : 'Menunggu' }}
+                </span>
+              </td>
+              <td class="text-end">
+                <ng-container *ngIf="r.status === 'pending'">
+                  <button mat-icon-button color="primary" (click)="approve(r)" matTooltip="Setujui">
+                    <mat-icon>check_circle</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="reject(r)" matTooltip="Tolak">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </ng-container>
+              </td>
+            </tr>
+            <tr *ngIf="requests.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">Tidak ada pengajuan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

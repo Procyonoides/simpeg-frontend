@@ -32,8 +32,16 @@ export class LoginComponent {
 
     const { username, password } = this.loginForm.value;
     this.authService.login(username, password).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
+      next: (res) => {
+        if (res.user.role === 'employee') {
+          if (res.user.must_change_password) {
+            this.router.navigate(['/portal/change-password']);
+          } else {
+            this.router.navigate(['/portal']);
+          }
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Login gagal';

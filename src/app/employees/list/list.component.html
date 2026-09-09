@@ -101,6 +101,9 @@
                   [matTooltip]="row.status === 'active' ? 'Nonaktifkan' : 'Aktifkan'">
                   <mat-icon>{{ row.status === 'active' ? 'person_off' : 'person' }}</mat-icon>
                 </button>
+                <button mat-icon-button *ngIf="isAdmin" (click)="onResetPassword(row)" matTooltip="Reset Password Login">
+                  <mat-icon>vpn_key</mat-icon>
+                </button>
                 <button mat-icon-button color="warn" *ngIf="showDeleteMode"
                   (click)="onDeletePermanent(row.id)" matTooltip="Hapus Permanen">
                   <mat-icon>delete_forever</mat-icon>

@@ -1,0 +1,22 @@
+.photo-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+}
+
+.photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eceff1;
+  color: #b0bec5;
+
+  mat-icon { font-size: 56px; width: 56px; height: 56px; }
+}

@@ -4,16 +4,16 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-list',
-  standalone: false,
+  selector: 'app-user-list',
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
   users: any[] = [];
   loading = false;
   showForm = false;
   currentUserId: number | null = null;
+  bulkCreating = false;
 
   roles = ['admin', 'hr', 'staff'];
 
@@ -85,4 +85,24 @@ export class ListComponent implements OnInit {
     });
   }
 
+  onBulkCreate() {
+    if (!confirm(
+      'Ini akan membuatkan akun login untuk SEMUA karyawan aktif yang belum punya akun.\n\n' +
+      'Username = NIK (kode karyawan), password default = "hsk".\n' +
+      'Karyawan akan diwajibkan ganti password saat login pertama.\n\n' +
+      'Lanjutkan?'
+    )) return;
+
+    this.bulkCreating = true;
+    this.userService.bulkCreateEmployeeAccounts().subscribe({
+      next: (res) => {
+        this.snackBar.open(res.message, 'Tutup', { duration: 6000 });
+        this.bulkCreating = false;
+      },
+      error: (err) => {
+        this.snackBar.open(err.error?.message || 'Gagal membuat akun karyawan', 'Tutup', { duration: 4000 });
+        this.bulkCreating = false;
+      }
+    });
+  }
 }

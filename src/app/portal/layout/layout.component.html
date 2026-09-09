@@ -1,0 +1,22 @@
+<div class="portal-shell">
+  <header class="portal-topbar">
+    <div class="brand">SIMPEG <span class="text-muted">- Portal Karyawan</span></div>
+    <div class="user-info">
+      <span>{{ user?.username }}</span>
+      <button mat-icon-button (click)="logout()" matTooltip="Keluar">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </header>
+  <nav class="portal-nav" *ngIf="!authService.needsPasswordChange()">
+    <a routerLink="/portal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <mat-icon>home</mat-icon> Beranda
+    </a>
+    <a routerLink="/portal/profile" routerLinkActive="active">
+      <mat-icon>person</mat-icon> Profil Saya
+    </a>
+  </nav>
+  <main class="portal-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

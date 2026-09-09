@@ -5,15 +5,21 @@
       <h5 class="fw-bold mb-1">Manajemen User</h5>
       <span class="text-muted small">Kelola akun admin, HR, dan staff perusahaan</span>
     </div>
-    <button mat-raised-button color="primary" (click)="showForm = !showForm">
-      <mat-icon>person_add</mat-icon> Tambah User
-    </button>
+    <div class="d-flex gap-2">
+      <button mat-stroked-button (click)="onBulkCreate()" [disabled]="bulkCreating">
+        <mat-icon>group_add</mat-icon>
+        {{ bulkCreating ? 'Memproses...' : 'Buatkan Akun untuk Semua Karyawan' }}
+      </button>
+      <button mat-raised-button color="primary" (click)="showForm = !showForm">
+        <mat-icon>person_add</mat-icon> Tambah User
+      </button>
+    </div>
   </div>
 
   <!-- Form tambah user -->
   <div class="card shadow-sm border-0 rounded-3 mb-3" *ngIf="showForm">
     <div class="card-body">
-      <div class="row g-2 align-items-end">
+      <div class="row g-2 align-items-start">
         <div class="col-md-3">
           <mat-form-field appearance="outline" class="w-100 mb-0">
             <mat-label>Username</mat-label>
@@ -35,7 +41,7 @@
           </mat-form-field>
         </div>
         <div class="col-md-3">
-          <button mat-raised-button color="primary" class="w-100" (click)="onAdd()">Simpan</button>
+          <button mat-raised-button color="primary" class="w-100 field-action-btn" (click)="onAdd()">Simpan</button>
         </div>
       </div>
     </div>

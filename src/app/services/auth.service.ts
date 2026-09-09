@@ -49,4 +49,26 @@ export class AuthService {
     const user = this.getCurrentUser();
     return !!user && roles.includes(user.role);
   }
+
+  isEmployee(): boolean {
+    return this.hasRole('employee');
+  }
+
+  needsPasswordChange(): boolean {
+    const user = this.getCurrentUser();
+    return !!user && user.must_change_password === true;
+  }
+
+  changePassword(current_password: string, new_password: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/change-password`, { current_password, new_password }).pipe(
+      tap(() => {
+        const user = this.getCurrentUser();
+        if (user) {
+          user.must_change_password = false;
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+      })
+    );
+  }
 }

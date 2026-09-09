@@ -1,0 +1,57 @@
+.portal-shell {
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+.portal-topbar {
+  height: 56px;
+  background: #263238;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  .brand { font-weight: 700; }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+
+    ::ng-deep .mat-icon { color: white; }
+  }
+}
+
+.portal-nav {
+  display: flex;
+  gap: 4px;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 20px;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    color: #607d8b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+    &.active {
+      color: #263238;
+      border-bottom-color: #263238;
+    }
+  }
+}
+
+.portal-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}

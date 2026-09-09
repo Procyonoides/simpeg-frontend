@@ -1,0 +1,84 @@
+<div *ngIf="loading" class="d-flex justify-content-center py-5">
+  <mat-spinner diameter="36"></mat-spinner>
+</div>
+
+<ng-container *ngIf="!loading && profile">
+
+  <!-- Foto profil -->
+  <div class="card shadow-sm border-0 rounded-3 mb-3">
+    <div class="card-body p-4 text-center">
+      <div class="photo-wrapper">
+        <img *ngIf="photoUrl()" [src]="photoUrl()" class="profile-photo" alt="Pasfoto">
+        <div *ngIf="!photoUrl()" class="profile-photo photo-placeholder">
+          <mat-icon>person</mat-icon>
+        </div>
+      </div>
+
+      <h6 class="fw-bold mt-3 mb-0">{{ profile.full_name }}</h6>
+      <div class="text-muted small">{{ profile.employee_code }} — {{ profile.position_name || '-' }}</div>
+
+      <div class="mt-3">
+        <input type="file" #fileInput hidden accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)">
+        <button mat-stroked-button (click)="fileInput.click()">
+          <mat-icon>photo_camera</mat-icon> Pilih Foto Baru
+        </button>
+        <button mat-raised-button color="primary" class="ms-2" *ngIf="selectedFile" [disabled]="uploadingPhoto" (click)="uploadPhoto()">
+          {{ uploadingPhoto ? 'Mengunggah...' : 'Simpan Foto' }}
+        </button>
+      </div>
+      <div class="text-muted small mt-2">Format JPG/PNG/WEBP, maksimal 2MB</div>
+    </div>
+  </div>
+
+  <!-- Data kontak (bisa diedit langsung) -->
+  <div class="card shadow-sm border-0 rounded-3 mb-3">
+    <div class="card-body p-4">
+      <h6 class="fw-bold mb-3">Data Kontak</h6>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>No. HP</mat-label>
+        <input matInput [(ngModel)]="editForm.phone">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Alamat</mat-label>
+        <textarea matInput rows="2" [(ngModel)]="editForm.address"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>No. Rekening</mat-label>
+        <input matInput [(ngModel)]="editForm.bank_account">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" [disabled]="saving" (click)="saveContactInfo()">
+        {{ saving ? 'Menyimpan...' : 'Simpan Perubahan' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Data yang butuh approval HR -->
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-4">
+      <h6 class="fw-bold mb-1">Ajukan Perubahan Nama</h6>
+      <p class="text-muted small mb-3">
+        Perubahan nama perlu disetujui HR/Admin dulu sebelum berlaku.
+      </p>
+
+      <div class="alert alert-warning py-2 small" *ngIf="pendingNameRequest">
+        Ada pengajuan yang masih menunggu persetujuan: ganti nama jadi
+        "<strong>{{ pendingNameRequest.new_value }}</strong>"
+      </div>
+
+      <ng-container *ngIf="!pendingNameRequest">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nama Baru</mat-label>
+          <input matInput [(ngModel)]="nameRequest" [placeholder]="profile.full_name">
+        </mat-form-field>
+        <button mat-stroked-button color="primary" [disabled]="submittingNameRequest || !nameRequest.trim()" (click)="submitNameRequest()">
+          {{ submittingNameRequest ? 'Mengirim...' : 'Kirim Pengajuan' }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+</ng-container>

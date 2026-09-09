@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PayrollService } from '../../services/payroll.service';
 
 @Component({
-  selector: 'app-slip',
-  standalone: false,
+  selector: 'app-payroll-slip',
   templateUrl: './slip.component.html',
   styleUrl: './slip.component.scss'
 })
@@ -41,6 +40,18 @@ export class SlipComponent implements OnInit {
     return this.slip?.components?.filter((c: any) => c.type === 'deduction') || [];
   }
 
+  get totalBpjsPph21() {
+    if (!this.slip) return 0;
+    return (this.slip.bpjsk_employee || 0) + (this.slip.bpjstk_jht || 0)
+      + (this.slip.bpjstk_jp || 0) + (this.slip.pph21_monthly || 0);
+  }
+
+  monthName(month: number): string {
+    const names = ['Januari','Februari','Maret','April','Mei','Juni',
+      'Juli','Agustus','September','Oktober','November','Desember'];
+    return names[month - 1] || '';
+  }
+
   print() {
     window.print();
   }
@@ -48,5 +59,4 @@ export class SlipComponent implements OnInit {
   back() {
     this.router.navigate(['/payroll']);
   }
-
 }

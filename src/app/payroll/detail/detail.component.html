@@ -13,10 +13,11 @@
   <ng-container *ngIf="!loading && run">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
-        <h5 class="fw-bold mb-1">Payroll {{ run.period | date:'MMMM y' }}</h5>
+        <h5 class="fw-bold mb-1">Payroll {{ monthName(run.month) }} {{ run.year }}</h5>
         <span class="badge" [ngClass]="run.status === 'finalized' ? 'bg-success' : 'bg-warning text-dark'">
           {{ run.status === 'finalized' ? 'Final' : 'Draft' }}
         </span>
+        <span class="text-muted small ms-2">{{ pagination.total }} karyawan</span>
       </div>
     </div>
 
@@ -30,18 +31,20 @@
                 <th>Jabatan</th>
                 <th>Gaji Pokok</th>
                 <th>Tunjangan</th>
-                <th>Potongan</th>
+                <th>BPJS + PPh21</th>
                 <th>Gaji Bersih</th>
                 <th class="text-end">Aksi</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of run.items">
+              <tr *ngFor="let item of items">
                 <td>{{ item.employee_name }} <span class="text-muted small">({{ item.employee_code }})</span></td>
                 <td>{{ item.position_name || '-' }}</td>
                 <td>Rp {{ item.basic_salary | number:'1.0-0' }}</td>
-                <td class="text-success">+ Rp {{ item.total_allowance | number:'1.0-0' }}</td>
-                <td class="text-danger">- Rp {{ item.total_deduction | number:'1.0-0' }}</td>
+                <td class="text-success">+ Rp {{ item.total_additions | number:'1.0-0' }}</td>
+                <td class="text-danger">
+                  - Rp {{ (item.bpjsk_employee + item.bpjstk_jht + item.bpjstk_jp + item.pph21_monthly) | number:'1.0-0' }}
+                </td>
                 <td class="fw-bold">Rp {{ item.net_salary | number:'1.0-0' }}</td>
                 <td class="text-end">
                   <button mat-icon-button (click)="viewSlip(item.id)" matTooltip="Lihat Slip">
@@ -49,8 +52,25 @@
                   </button>
                 </td>
               </tr>
+              <tr *ngIf="items.length === 0">
+                <td colspan="7" class="text-center text-muted py-4">Belum ada data</td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center p-3" *ngIf="pagination.totalPages > 1">
+          <span class="text-muted small">
+            Halaman {{ pagination.page }} dari {{ pagination.totalPages }}
+          </span>
+          <div>
+            <button mat-stroked-button [disabled]="pagination.page <= 1" (click)="prevPage()">
+              <mat-icon>chevron_left</mat-icon> Sebelumnya
+            </button>
+            <button mat-stroked-button class="ms-2" [disabled]="pagination.page >= pagination.totalPages" (click)="nextPage()">
+              Berikutnya <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>

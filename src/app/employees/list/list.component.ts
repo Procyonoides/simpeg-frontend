@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -33,10 +34,19 @@ export class ListComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar,
     private router: Router,
     private http: HttpClient
   ) {}
+
+  onResetPassword(row: any) {
+    if (!confirm(`Reset password login "${row.full_name}" ke default? Password akan kembali jadi "hsk" dan wajib diganti saat login berikutnya.`)) return;
+    this.userService.resetEmployeePassword(row.id).subscribe({
+      next: (res) => this.snackBar.open(res.message, 'Tutup', { duration: 4000 }),
+      error: (err) => this.snackBar.open(err.error?.message || 'Gagal reset password (mungkin karyawan ini belum punya akun login)', 'Tutup', { duration: 4000 })
+    });
+  }
 
   ngOnInit() {
     this.isAdmin = this.authService.hasRole('admin');

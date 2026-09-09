@@ -20,8 +20,12 @@ export class PayrollService {
     return this.http.get<any>(`${this.apiUrl}/slip/${itemId}`);
   }
 
-  generate(period: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/generate`, { period });
+  generate(year: number, month: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/generate`, { year, month });
+  }
+
+  getByIdPaged(id: number, page: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { params: { page: String(page), limit: String(limit) } });
   }
 
   finalize(id: number): Observable<any> {

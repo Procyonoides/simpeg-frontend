@@ -19,13 +19,15 @@ import { EmployeesRoutingModule } from './employees-routing.module';
 import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { DetailComponent } from './detail/detail.component';
+import { ChangeRequestsComponent } from './change-requests/change-requests.component';
 
 
 @NgModule({
   declarations: [
     ListComponent,
     FormComponent,
-    DetailComponent
+    DetailComponent,
+    ChangeRequestsComponent
   ],
   imports: [
     CommonModule,

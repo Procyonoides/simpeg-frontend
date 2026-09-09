@@ -31,6 +31,10 @@
         <mat-icon>people</mat-icon>
         <span>Karyawan</span>
       </a>
+      <a class="nav-item" *ngIf="isAdminOrHr" routerLink="/employees/change-requests" routerLinkActive="active">
+        <mat-icon>fact_check</mat-icon>
+        <span>Pengajuan Data</span>
+      </a>
     </div>
 
     <div class="nav-group">
