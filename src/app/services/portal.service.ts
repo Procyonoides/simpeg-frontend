@@ -29,4 +29,24 @@ export class PortalService {
   getMyChangeRequests(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/change-requests`);
   }
+
+  getPayslips(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/payslips`);
+  }
+
+  getPayslipDetail(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/payslips/${id}`);
+  }
+
+  getMyLeaveRequests(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/leave`);
+  }
+
+  getMyLeaveBalance(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/leave-balance`);
+  }
+
+  createLeaveRequest(data: { type: string; start_date: string; end_date: string; reason: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/leave`, data);
+  }
 }

@@ -43,7 +43,7 @@
                 <td>Rp {{ item.basic_salary | number:'1.0-0' }}</td>
                 <td class="text-success">+ Rp {{ item.total_additions | number:'1.0-0' }}</td>
                 <td class="text-danger">
-                  - Rp {{ (item.bpjsk_employee + item.bpjstk_jht + item.bpjstk_jp + item.pph21_monthly) | number:'1.0-0' }}
+                  - Rp {{ totalBpjsPph21(item) | number:'1.0-0' }}
                 </td>
                 <td class="fw-bold">Rp {{ item.net_salary | number:'1.0-0' }}</td>
                 <td class="text-end">

@@ -1,0 +1,73 @@
+<div class="card shadow-sm border-0 rounded-3 mb-3">
+  <div class="card-body p-4">
+    <h6 class="fw-bold mb-3">Ajukan Cuti / Izin</h6>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Tipe Pengajuan</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="annual">Cuti Tahunan</mat-option>
+          <mat-option value="sick">Sakit</mat-option>
+          <mat-option value="permission">Izin</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="balance-info" *ngIf="form.get('type')?.value === 'annual'">
+        <span *ngIf="loadingBalance">Mengecek sisa kuota...</span>
+        <span *ngIf="!loadingBalance && balance">
+          Sisa kuota cuti tahunan: <strong>{{ balance.remaining }}</strong> dari {{ balance.quota }} hari
+          <span class="text-muted">
+            (periode {{ balance.cycle_start | date:'d MMM y' }} – {{ balance.cycle_end | date:'d MMM y' }})
+          </span>
+        </span>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Tanggal Mulai</mat-label>
+            <input matInput type="date" formControlName="start_date">
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Tanggal Selesai</mat-label>
+            <input matInput type="date" formControlName="end_date">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Alasan</mat-label>
+        <textarea matInput rows="2" formControlName="reason"></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || submitting">
+        {{ submitting ? 'Mengirim...' : 'Kirim Pengajuan' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-3">
+  <div class="card-body p-4">
+    <h6 class="fw-bold mb-3">Riwayat Pengajuan</h6>
+
+    <div *ngIf="loadingHistory" class="d-flex justify-content-center py-4">
+      <mat-spinner diameter="32"></mat-spinner>
+    </div>
+
+    <div class="leave-row" *ngFor="let r of requests">
+      <div>
+        <div class="fw-bold">{{ typeLabel(r.type) }}</div>
+        <div class="text-muted small">{{ r.start_date | date:'d MMM y' }} – {{ r.end_date | date:'d MMM y' }}</div>
+        <div class="text-muted small">{{ r.reason }}</div>
+      </div>
+      <span class="badge" [ngClass]="statusColor(r.status)">{{ statusLabel(r.status) }}</span>
+    </div>
+
+    <div class="text-muted text-center py-3" *ngIf="!loadingHistory && requests.length === 0">
+      Belum ada pengajuan cuti/izin.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div *ngIf="loading" class="d-flex justify-content-center py-5">
+  <mat-spinner diameter="36"></mat-spinner>
+</div>
+
+<div class="card shadow-sm border-0 rounded-3" *ngIf="!loading">
+  <div class="card-body p-4">
+    <h6 class="fw-bold mb-3">Riwayat Slip Gaji</h6>
+
+    <div class="payslip-row" *ngFor="let p of payslips" (click)="viewDetail(p.id)">
+      <div>
+        <div class="fw-bold">{{ monthName(p.month) }} {{ p.year }}</div>
+        <div class="text-muted small">Gaji bersih</div>
+      </div>
+      <div class="text-end">
+        <div class="fw-bold">Rp {{ p.net_salary | number:'1.0-0' }}</div>
+        <mat-icon class="text-muted">chevron_right</mat-icon>
+      </div>
+    </div>
+
+    <div class="text-muted text-center py-4" *ngIf="payslips.length === 0">
+      Belum ada slip gaji yang final untuk kamu.
+    </div>
+  </div>
+</div>

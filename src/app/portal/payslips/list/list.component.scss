@@ -1,0 +1,13 @@
+.payslip-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: #fafafa; }
+
+  mat-icon { vertical-align: middle; }
+}

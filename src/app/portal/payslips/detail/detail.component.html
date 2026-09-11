@@ -1,0 +1,89 @@
+<div class="d-flex justify-content-between align-items-center mb-3 no-print">
+  <button mat-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon> Kembali
+  </button>
+  <button mat-stroked-button *ngIf="slip" (click)="print()">
+    <mat-icon>print</mat-icon> Cetak
+  </button>
+</div>
+
+<div *ngIf="loading" class="d-flex justify-content-center py-5">
+  <mat-spinner diameter="36"></mat-spinner>
+</div>
+
+<div class="slip-card card shadow-sm border-0 rounded-3" *ngIf="!loading && slip">
+  <div class="card-body p-4">
+    <div class="text-center mb-3">
+      <h5 class="fw-bold mb-0">SLIP GAJI</h5>
+      <div class="text-muted">Periode {{ monthName(slip.month) }} {{ slip.year }}</div>
+    </div>
+
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <span class="text-muted">Nama</span>
+        <span class="fw-bold">{{ slip.employee_name }}</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class="text-muted">Jabatan</span>
+        <span>{{ slip.position_name || '-' }}</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between">
+      <span>Gaji Pokok</span>
+      <span>Rp {{ slip.basic_salary | number:'1.0-0' }}</span>
+    </div>
+
+    <div class="mt-2" *ngIf="additions.length > 0">
+      <div class="section-title text-success">Tunjangan</div>
+      <div class="d-flex justify-content-between" *ngFor="let a of additions">
+        <span>{{ a.component_name }}</span>
+        <span>+ Rp {{ a.amount | number:'1.0-0' }}</span>
+      </div>
+    </div>
+
+    <div class="mt-2" *ngIf="deductions.length > 0">
+      <div class="section-title text-danger">Potongan Lain</div>
+      <div class="d-flex justify-content-between" *ngFor="let d of deductions">
+        <span>{{ d.component_name }}</span>
+        <span>- Rp {{ d.amount | number:'1.0-0' }}</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="section-title text-danger">Potongan BPJS & Pajak</div>
+    <div class="d-flex justify-content-between">
+      <span>BPJS Kesehatan</span>
+      <span>- Rp {{ slip.bpjsk_employee | number:'1.0-0' }}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>BPJS TK - JHT</span>
+      <span>- Rp {{ slip.bpjstk_jht | number:'1.0-0' }}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>BPJS TK - JP</span>
+      <span>- Rp {{ slip.bpjstk_jp | number:'1.0-0' }}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>PPh 21</span>
+      <span>- Rp {{ slip.pph21_monthly | number:'1.0-0' }}</span>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between">
+      <span>Gaji Kotor</span>
+      <span>Rp {{ slip.gross_salary | number:'1.0-0' }}</span>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between slip-total">
+      <span class="fw-bold">Gaji Diterima (Net)</span>
+      <span class="fw-bold">Rp {{ slip.net_salary | number:'1.0-0' }}</span>
+    </div>
+  </div>
+</div>

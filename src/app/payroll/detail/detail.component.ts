@@ -60,4 +60,9 @@ export class DetailComponent implements OnInit {
   back() {
     this.router.navigate(['/payroll']);
   }
+
+  totalBpjsPph21(item: any): number {
+    return Number(item.bpjsk_employee) + Number(item.bpjstk_jht)
+      + Number(item.bpjstk_jp) + Number(item.pph21_monthly);
+  }
 }
