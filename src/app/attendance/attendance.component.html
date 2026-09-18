@@ -1,0 +1,66 @@
+<div class="page-container">
+  <h5 class="fw-bold mb-1">Data Absensi</h5>
+  <p class="text-muted small mb-3">Data ditarik langsung dari mesin fingerprint (hsk_attendance)</p>
+
+  <div class="card shadow-sm border-0 rounded-3 mb-3">
+    <div class="card-body p-3">
+      <div class="row g-2 align-items-start">
+        <div class="col-md-5 position-relative">
+          <input class="form-control" placeholder="Cari nama karyawan..."
+            [(ngModel)]="searchText" (input)="onSearchChange()">
+          <div class="search-dropdown" *ngIf="searchResults.length > 0">
+            <div class="search-item" *ngFor="let emp of searchResults" (click)="selectEmployee(emp)">
+              {{ emp.full_name }} <span class="text-muted small">({{ emp.employee_code }})</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="month" (change)="load()">
+            <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <input class="form-control" type="number" [(ngModel)]="year" (change)="load()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="card shadow-sm border-0 rounded-3" *ngIf="selectedEmployee">
+    <div class="card-body p-0">
+      <div *ngIf="loading" class="d-flex justify-content-center py-5">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+
+      <div class="table-responsive" *ngIf="!loading">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Jam Masuk</th>
+              <th>Jam Pulang</th>
+              <th>Jumlah Scan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of records">
+              <td>{{ r.attendance_date | date:'EEEE, d MMM y' }}</td>
+              <td>{{ r.check_in | date:'HH:mm:ss' }}</td>
+              <td>{{ r.check_out | date:'HH:mm:ss' }}</td>
+              <td>{{ r.scan_count }}</td>
+            </tr>
+            <tr *ngIf="records.length === 0">
+              <td colspan="4" class="text-center text-muted py-4">Tidak ada data absensi di bulan ini</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-muted text-center py-5" *ngIf="!selectedEmployee">
+    Cari dan pilih karyawan dulu buat lihat data absensinya.
+  </div>
+</div>

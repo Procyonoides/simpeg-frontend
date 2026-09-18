@@ -59,4 +59,10 @@ export class PortalService {
       params: { search, page: String(page), limit: String(limit) }
     });
   }
+
+  getMyAttendance(year: number, month: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/attendance`, {
+      params: { year: String(year), month: String(month) }
+    });
+  }
 }
