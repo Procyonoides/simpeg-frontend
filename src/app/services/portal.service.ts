@@ -49,4 +49,14 @@ export class PortalService {
   createLeaveRequest(data: { type: string; start_date: string; end_date: string; reason: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/leave`, data);
   }
+
+  getHomeSummary(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/home-summary`);
+  }
+
+  getDirectory(search: string, page: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/directory`, {
+      params: { search, page: String(page), limit: String(limit) }
+    });
+  }
 }

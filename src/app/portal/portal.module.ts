@@ -19,6 +19,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ListComponent as PayslipListComponent } from './payslips/list/list.component';
 import { DetailComponent as PayslipDetailComponent } from './payslips/detail/detail.component';
 import { LeaveComponent } from './leave/leave.component';
+import { DirectoryComponent } from './directory/directory.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LeaveComponent } from './leave/leave.component';
     ProfileComponent,
     PayslipListComponent,
     PayslipDetailComponent,
-    LeaveComponent
+    LeaveComponent,
+    DirectoryComponent
   ],
   imports: [
     CommonModule,

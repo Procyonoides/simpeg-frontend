@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ListComponent as PayslipListComponent } from './payslips/list/list.component';
 import { DetailComponent as PayslipDetailComponent } from './payslips/detail/detail.component';
 import { LeaveComponent } from './leave/leave.component';
+import { DirectoryComponent } from './directory/directory.component';
 import { PasswordChangeGuard } from '../guards/password-change.guard';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'payslips', component: PayslipListComponent, canActivate: [PasswordChangeGuard] },
       { path: 'payslips/:id', component: PayslipDetailComponent, canActivate: [PasswordChangeGuard] },
       { path: 'leave', component: LeaveComponent, canActivate: [PasswordChangeGuard] },
+      { path: 'directory', component: DirectoryComponent, canActivate: [PasswordChangeGuard] },
       { path: '', component: HomeComponent, canActivate: [PasswordChangeGuard] }
     ]
   }
