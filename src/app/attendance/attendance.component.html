@@ -46,9 +46,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let r of records">
-              <td>{{ r.attendance_date | date:'EEEE, d MMM y' }}</td>
-              <td>{{ r.check_in | date:'HH:mm:ss' }}</td>
-              <td>{{ r.check_out | date:'HH:mm:ss' }}</td>
+              <td>{{ r.attendance_date | date:'EEEE, d MMM y':'UTC' }}</td>
+              <td>{{ r.check_in | date:'HH:mm:ss':'UTC' }}</td>
+              <td>{{ r.check_out | date:'HH:mm:ss':'UTC' }}</td>
               <td>{{ r.scan_count }}</td>
             </tr>
             <tr *ngIf="records.length === 0">

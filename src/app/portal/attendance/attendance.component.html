@@ -21,10 +21,10 @@
 
     <div class="attendance-row" *ngFor="let r of records">
       <div>
-        <div class="fw-bold">{{ r.attendance_date | date:'EEEE, d MMM y' }}</div>
+        <div class="fw-bold">{{ r.attendance_date | date:'EEEE, d MMM y':'UTC' }}</div>
       </div>
       <div class="text-end">
-        <div>{{ r.check_in | date:'HH:mm' }} – {{ r.check_out | date:'HH:mm' }}</div>
+        <div>{{ r.check_in | date:'HH:mm':'UTC' }} – {{ r.check_out | date:'HH:mm':'UTC' }}</div>
       </div>
     </div>
 

@@ -8,23 +8,29 @@
       </button>
     </div>
   </header>
-  <nav class="portal-nav" *ngIf="!authService.needsPasswordChange()">
-    <a routerLink="/portal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-      <mat-icon>home</mat-icon> Beranda
-    </a>
-    <a routerLink="/portal/profile" routerLinkActive="active">
-      <mat-icon>person</mat-icon> Profil Saya
-    </a>
-    <a routerLink="/portal/payslips" routerLinkActive="active">
-      <mat-icon>receipt_long</mat-icon> Slip Gaji
-    </a>
-    <a routerLink="/portal/leave" routerLinkActive="active">
-      <mat-icon>event_available</mat-icon> Cuti & Izin
-    </a>
-    <a routerLink="/portal/directory" routerLinkActive="active">
-      <mat-icon>groups</mat-icon> Direktori
-    </a>
-  </nav>
+    <nav class="portal-nav" *ngIf="!authService.needsPasswordChange()">
+      <a routerLink="/portal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon> Beranda
+      </a>
+      <a routerLink="/portal/profile" routerLinkActive="active">
+        <mat-icon>person</mat-icon> Profil Saya
+      </a>
+      <a routerLink="/portal/payslips" routerLinkActive="active">
+        <mat-icon>receipt_long</mat-icon> Slip Gaji
+      </a>
+      <a routerLink="/portal/leave" routerLinkActive="active">
+        <mat-icon>event_available</mat-icon> Cuti & Izin
+      </a>
+      <a routerLink="/portal/directory" routerLinkActive="active">
+        <mat-icon>groups</mat-icon> Direktori
+      </a>
+      <a routerLink="/portal/attendance" routerLinkActive="active">
+        <mat-icon>fingerprint</mat-icon> Absensi
+      </a>
+      <a routerLink="/portal/overtime" routerLinkActive="active">
+        <mat-icon>schedule</mat-icon> Lembur
+      </a>
+    </nav>
   <main class="portal-content">
     <router-outlet></router-outlet>
   </main>

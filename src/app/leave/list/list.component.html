@@ -5,9 +5,14 @@
       <h5 class="fw-bold mb-1">Cuti & Izin</h5>
       <span class="text-muted small">Kelola pengajuan cuti, izin, dan sakit</span>
     </div>
-    <button mat-raised-button color="primary" (click)="onAdd()">
-      <mat-icon>add</mat-icon> Tambah Pengajuan
-    </button>
+    <div class="d-flex gap-2">
+      <button mat-stroked-button [disabled]="exporting" (click)="onExport()">
+        <mat-icon>download</mat-icon> {{ exporting ? 'Mengunduh...' : 'Export Excel' }}
+      </button>
+      <button mat-raised-button color="primary" (click)="onAdd()">
+        <mat-icon>add</mat-icon> Tambah Pengajuan
+      </button>
+    </div>
   </div>
 
   <!-- Filter -->

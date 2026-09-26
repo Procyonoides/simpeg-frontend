@@ -20,6 +20,7 @@ export class ListComponent implements OnInit {
   searchText = '';
   searchSubject = new Subject<string>();
   Math = Math;
+  exporting = false;
 
   // Pagination
   currentPage = 1;
@@ -135,6 +136,25 @@ export class ListComponent implements OnInit {
       error: () => {
         this.snackBar.open('Gagal import', 'Tutup', { duration: 3000 });
         this.loading = false;
+      }
+    });
+  }
+
+  onExport() {
+    this.exporting = true;
+    this.employeeService.exportExcel(this.searchText).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'daftar-karyawan.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.exporting = false;
+      },
+      error: () => {
+        this.snackBar.open('Gagal export data', 'Tutup', { duration: 3000 });
+        this.exporting = false;
       }
     });
   }

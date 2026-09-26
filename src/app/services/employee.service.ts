@@ -37,4 +37,8 @@ export class EmployeeService {
   deletePermanent(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}/permanent`);
   }
+
+  exportExcel(search = ''): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/export?search=${search}`, { responseType: 'blob' });
+  }
 }

@@ -31,4 +31,8 @@ export class LeaveService {
   getBalance(employeeId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/balance/${employeeId}`);
   }
+
+  exportExcel(status = '', type = ''): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/export?status=${status}&type=${type}`, { responseType: 'blob' });
+  }
 }

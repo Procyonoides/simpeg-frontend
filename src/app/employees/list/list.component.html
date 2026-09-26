@@ -16,6 +16,9 @@
         <mat-icon>upload_file</mat-icon> Import Excel
       </button>
       <input #fileInput type="file" accept=".xlsx,.xls" style="display:none" (change)="onImport($event)">
+      <button mat-stroked-button [disabled]="exporting" (click)="onExport()">
+        <mat-icon>download</mat-icon> {{ exporting ? 'Mengunduh...' : 'Export Excel' }}
+      </button>
       <button mat-raised-button color="primary" (click)="onAdd()">
         <mat-icon>person_add</mat-icon> Tambah Karyawan
       </button>

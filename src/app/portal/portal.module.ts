@@ -20,6 +20,8 @@ import { ListComponent as PayslipListComponent } from './payslips/list/list.comp
 import { DetailComponent as PayslipDetailComponent } from './payslips/detail/detail.component';
 import { LeaveComponent } from './leave/leave.component';
 import { DirectoryComponent } from './directory/directory.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { OvertimeComponent } from './overtime/overtime.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { DirectoryComponent } from './directory/directory.component';
     PayslipListComponent,
     PayslipDetailComponent,
     LeaveComponent,
-    DirectoryComponent
+    DirectoryComponent,
+    AttendanceComponent,
+    OvertimeComponent
   ],
   imports: [
     CommonModule,

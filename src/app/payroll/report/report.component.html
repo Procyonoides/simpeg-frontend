@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-between align-items-center mb-3 no-print">
+  <button mat-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon> Kembali
+  </button>
+  <button mat-raised-button color="primary" *ngIf="run" (click)="print()">
+    <mat-icon>print</mat-icon> Cetak / Simpan PDF
+  </button>
+</div>
+
+<div *ngIf="loading" class="d-flex justify-content-center py-5">
+  <mat-spinner diameter="36"></mat-spinner>
+</div>
+
+<div class="report-card card shadow-sm border-0 rounded-3" *ngIf="!loading && run">
+  <div class="card-body p-4">
+    <div class="text-center mb-4">
+      <h5 class="fw-bold mb-0">LAPORAN RINGKASAN PAYROLL</h5>
+      <div class="text-muted">Periode {{ monthName(run.month) }} {{ run.year }}</div>
+      <span class="badge mt-1" [ngClass]="run.status === 'finalized' ? 'bg-success' : 'bg-warning text-dark'">
+        {{ run.status === 'finalized' ? 'Final' : 'Draft' }}
+      </span>
+    </div>
+
+    <div class="summary-grid mb-4">
+      <div class="summary-item">
+        <div class="summary-label">Jumlah Karyawan</div>
+        <div class="summary-value">{{ totals.employeeCount }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Gaji Pokok</div>
+        <div class="summary-value">Rp {{ totals.basicSalary | number:'1.0-0' }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Tunjangan</div>
+        <div class="summary-value">Rp {{ totals.additions | number:'1.0-0' }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Potongan Lain</div>
+        <div class="summary-value">Rp {{ totals.deductions | number:'1.0-0' }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total BPJS + PPh21</div>
+        <div class="summary-value">Rp {{ totals.bpjsPph21 | number:'1.0-0' }}</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Gaji Kotor</div>
+        <div class="summary-value">Rp {{ totals.grossSalary | number:'1.0-0' }}</div>
+      </div>
+    </div>
+
+    <div class="net-total-box mb-4">
+      <div>Total Gaji Bersih (Take Home Pay) Seluruh Karyawan</div>
+      <div class="net-total-value">Rp {{ totals.netSalary | number:'1.0-0' }}</div>
+    </div>
+
+    <h6 class="fw-bold mb-2">Rincian per Departemen</h6>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Departemen</th>
+          <th class="text-center">Jumlah Karyawan</th>
+          <th class="text-end">Total Gaji Bersih</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of departmentBreakdown">
+          <td>{{ d.department }}</td>
+          <td class="text-center">{{ d.count }}</td>
+          <td class="text-end">Rp {{ d.netSalary | number:'1.0-0' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-muted small mt-4 text-end">
+      Dicetak pada {{ (run.processed_at || run.created_at) | date:'d MMMM y, HH:mm' }}
+    </div>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class ListComponent implements OnInit {
   leaves: any[] = [];
   loading = false;
+  exporting = false;
   filterStatus = '';
   filterType = '';
 
@@ -61,6 +62,25 @@ export class ListComponent implements OnInit {
     if (!start || !end) return 0;
     const diff = new Date(end).getTime() - new Date(start).getTime();
     return Math.ceil(diff / (1000 * 60 * 60 * 24)) + 1;
+  }
+
+  onExport() {
+    this.exporting = true;
+    this.leaveService.exportExcel(this.filterStatus, this.filterType).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'laporan-cuti-izin.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.exporting = false;
+      },
+      error: () => {
+        this.snackBar.open('Gagal export data', 'Tutup', { duration: 3000 });
+        this.exporting = false;
+      }
+    });
   }
 
 }

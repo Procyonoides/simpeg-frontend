@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PayrollService } from '../../services/payroll.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-payroll-detail',
@@ -13,11 +14,13 @@ export class DetailComponent implements OnInit {
   items: any[] = [];
   pagination: any = { page: 1, limit: 25, total: 0, totalPages: 1 };
   loading = false;
+  exporting = false;
   periodId!: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private snackBar: MatSnackBar,
     private payrollService: PayrollService
   ) {}
 
@@ -64,5 +67,28 @@ export class DetailComponent implements OnInit {
   totalBpjsPph21(item: any): number {
     return Number(item.bpjsk_employee) + Number(item.bpjstk_jht)
       + Number(item.bpjstk_jp) + Number(item.pph21_monthly);
+  }
+
+  viewReport() {
+    this.router.navigate(['/payroll/report', this.periodId]);
+  }
+
+  onExport() {
+    this.exporting = true;
+    this.payrollService.exportExcel(this.periodId).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `payroll-${this.run.year}-${String(this.run.month).padStart(2, '0')}.xlsx`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.exporting = false;
+      },
+      error: () => {
+        this.snackBar.open('Gagal export data', 'Tutup', { duration: 3000 });
+        this.exporting = false;
+      }
+    });
   }
 }

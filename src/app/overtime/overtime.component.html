@@ -1,0 +1,107 @@
+<div class="page-container">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h5 class="fw-bold mb-1">Lembur</h5>
+      <span class="text-muted small">Persetujuan & realisasi pengajuan lembur karyawan</span>
+    </div>
+    <div>
+      <button mat-button [color]="filterStatus === 'pending' ? 'primary' : ''" (click)="setFilter('pending')">Menunggu</button>
+      <button mat-button [color]="filterStatus === 'approved' ? 'primary' : ''" (click)="setFilter('approved')">Disetujui</button>
+      <button mat-button [color]="filterStatus === 'rejected' ? 'primary' : ''" (click)="setFilter('rejected')">Ditolak</button>
+      <button mat-button [color]="filterStatus === '' ? 'primary' : ''" (click)="setFilter('')">Semua</button>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-0">
+      <div *ngIf="loading" class="d-flex justify-content-center py-5">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+
+      <div class="table-responsive" *ngIf="!loading">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Karyawan</th>
+              <th>Tanggal</th>
+              <th>Rencana</th>
+              <th>Status</th>
+              <th>Realisasi</th>
+              <th class="text-end">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let r of requests">
+              <tr>
+                <td>{{ r.full_name }} <span class="text-muted small">({{ r.employee_code }})</span></td>
+                <td>{{ r.date | date:'d MMM y':'UTC' }}</td>
+                <td>{{ r.planned_start }} – {{ r.planned_end }} ({{ r.planned_hours }} jam)</td>
+                <td>
+                  <span class="badge" [ngClass]="statusColor(r.status)">{{ statusLabel(r.status) }}</span>
+                </td>
+                <td>
+                  <span *ngIf="r.realization_id" class="fw-bold">
+                    {{ r.actual_hours }} jam — Rp {{ r.overtime_amount | number:'1.0-0' }}
+                  </span>
+                  <span *ngIf="!r.realization_id" class="text-muted">-</span>
+                </td>
+                <td class="text-end">
+                  <ng-container *ngIf="r.status === 'pending'">
+                    <button mat-icon-button color="primary" (click)="approve(r)" matTooltip="Setujui">
+                      <mat-icon>check_circle</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="reject(r)" matTooltip="Tolak">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </ng-container>
+                  <button mat-icon-button *ngIf="r.status === 'approved' && !r.realization_id"
+                    (click)="openRealization(r)" matTooltip="Input Realisasi">
+                    <mat-icon>fact_check</mat-icon>
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="realizingId === r.id">
+                <td colspan="6">
+                  <div class="realization-form">
+                    <div *ngIf="loadingSuggestion" class="text-muted small mb-2">
+                      Mengecek data absensi asli tanggal itu...
+                    </div>
+                    <div class="row g-2 align-items-end">
+                      <div class="col-md-3">
+                        <label class="form-label small">Jam Mulai Aktual</label>
+                        <input class="form-control" type="time" [(ngModel)]="realizationForm.actual_start">
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label small">Jam Selesai Aktual</label>
+                        <input class="form-control" type="time" [(ngModel)]="realizationForm.actual_end">
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-check-label small d-block">&nbsp;</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" [(ngModel)]="realizationForm.is_holiday" id="holidayCheck{{r.id}}">
+                          <label class="form-check-label small" for="holidayCheck{{r.id}}">Hari libur/istirahat mingguan</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <button mat-raised-button color="primary" [disabled]="submittingRealization" (click)="submitRealization(r)">
+                          Simpan
+                        </button>
+                        <button mat-button (click)="closeRealization()">Batal</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+
+            <tr *ngIf="requests.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">Tidak ada pengajuan lembur</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

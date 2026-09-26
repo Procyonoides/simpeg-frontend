@@ -10,12 +10,16 @@ export class RoleGuard implements CanActivate {
     const allowedRoles = route.data['roles'] as string[] | undefined;
     const user = this.authService.getCurrentUser();
 
+    console.log('[RoleGuard]', { path: route.routeConfig?.path, allowedRoles, user });
+
     if (!user) {
+      console.log('[RoleGuard] user kosong, redirect ke login');
       this.router.navigate(['/auth/login']);
       return false;
     }
 
     if (allowedRoles && !allowedRoles.includes(user.role)) {
+      console.log('[RoleGuard] role gak cocok, redirect ke dashboard');
       this.router.navigate(['/dashboard']);
       return false;
     }

@@ -19,6 +19,14 @@
         </span>
         <span class="text-muted small ms-2">{{ pagination.total }} karyawan</span>
       </div>
+      <div class="d-flex gap-2">
+        <button mat-stroked-button [disabled]="exporting" (click)="onExport()">
+          <mat-icon>download</mat-icon> {{ exporting ? 'Mengunduh...' : 'Export Excel' }}
+        </button>
+        <button mat-stroked-button (click)="viewReport()">
+          <mat-icon>summarize</mat-icon> Laporan PDF
+        </button>
+      </div>
     </div>
 
     <div class="card shadow-sm border-0 rounded-3">

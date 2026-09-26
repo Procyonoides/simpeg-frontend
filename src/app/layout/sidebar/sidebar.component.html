@@ -39,9 +39,13 @@
 
     <div class="nav-group">
       <div class="nav-group-title">ABSENSI</div>
-      <a class="nav-item" routerLink="/attendance" routerLinkActive="active">
+      <a class="nav-item" *ngIf="isAdminOrHr" routerLink="/attendance" routerLinkActive="active">
         <mat-icon>fingerprint</mat-icon>
         <span>Data Absensi</span>
+      </a>
+      <a class="nav-item" *ngIf="isAdminOrHr" routerLink="/overtime" routerLinkActive="active">
+        <mat-icon>schedule</mat-icon>
+        <span>Lembur</span>
       </a>
       <a class="nav-item" routerLink="/leave" routerLinkActive="active">
         <mat-icon>event_busy</mat-icon>

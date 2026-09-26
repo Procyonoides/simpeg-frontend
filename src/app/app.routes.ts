@@ -35,6 +35,18 @@ export const routes: Routes = [
                 loadChildren: () => import('./employees/employees.module').then(m => m.EmployeesModule)
             },
             {
+                path: 'attendance',
+                canActivate: [RoleGuard],
+                data: { roles: ['admin', 'hr'] },
+                loadChildren: () => import('./attendance/attendance.module').then(m => m.AttendanceModule)
+            },
+                        {
+                path: 'overtime',
+                canActivate: [RoleGuard],
+                data: { roles: ['admin', 'hr'] },
+                loadChildren: () => import('./overtime/overtime.module').then(m => m.OvertimeModule)
+            },
+            {
                 path: 'leave',
                 loadChildren: () => import('./leave/leave.module').then(m => m.LeaveModule)
             },

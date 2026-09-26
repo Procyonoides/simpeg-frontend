@@ -65,4 +65,12 @@ export class PortalService {
       params: { year: String(year), month: String(month) }
     });
   }
+
+  createOvertimeRequest(data: { date: string; planned_start: string; planned_end: string; reason: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/overtime`, data);
+  }
+
+  getMyOvertimeRequests(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/overtime`);
+  }
 }

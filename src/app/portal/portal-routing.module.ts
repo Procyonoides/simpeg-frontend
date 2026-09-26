@@ -9,6 +9,8 @@ import { DetailComponent as PayslipDetailComponent } from './payslips/detail/det
 import { LeaveComponent } from './leave/leave.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { PasswordChangeGuard } from '../guards/password-change.guard';
+import { AttendanceComponent } from '../attendance/attendance.component';
+import { OvertimeComponent } from '../overtime/overtime.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,8 @@ const routes: Routes = [
       { path: 'payslips/:id', component: PayslipDetailComponent, canActivate: [PasswordChangeGuard] },
       { path: 'leave', component: LeaveComponent, canActivate: [PasswordChangeGuard] },
       { path: 'directory', component: DirectoryComponent, canActivate: [PasswordChangeGuard] },
+      { path: 'attendance', component: AttendanceComponent, canActivate: [PasswordChangeGuard] },
+      { path: 'overtime', component: OvertimeComponent, canActivate: [PasswordChangeGuard] },
       { path: '', component: HomeComponent, canActivate: [PasswordChangeGuard] }
     ]
   }

@@ -35,4 +35,8 @@ export class PayrollService {
   remove(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  exportExcel(id: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${id}/export`, { responseType: 'blob' });
+  }
 }
