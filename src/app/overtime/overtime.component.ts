@@ -16,6 +16,7 @@ export class OvertimeComponent implements OnInit {
   // Form realisasi yang lagi dibuka (null kalau gak ada yang dibuka)
   realizingId: number | null = null;
   loadingSuggestion = false;
+  attendanceHint = '';
   realizationForm = { actual_start: '', actual_end: '', is_holiday: false };
   submittingRealization = false;
 
@@ -65,13 +66,21 @@ export class OvertimeComponent implements OnInit {
 
   openRealization(r: any) {
     this.realizingId = r.id;
-    this.realizationForm = { actual_start: '', actual_end: '', is_holiday: false };
+    // Jam mulai default = jam mulai lembur yang direncanakan, bukan jam masuk kantor
+    this.realizationForm = {
+      actual_start: r.planned_start ? String(r.planned_start).slice(0, 5) : '',
+      actual_end: '',
+      is_holiday: false
+    };
+    this.attendanceHint = '';
     this.loadingSuggestion = true;
 
     this.overtimeService.getAttendanceSuggestion(r.id).subscribe({
       next: (res) => {
-        if (res.check_in) this.realizationForm.actual_start = this.toTimeInput(res.check_in);
         if (res.check_out) this.realizationForm.actual_end = this.toTimeInput(res.check_out);
+        this.attendanceHint = res.check_in
+          ? `Absensi mesin: masuk ${this.toTimeInput(res.check_in)}, pulang ${res.check_out ? this.toTimeInput(res.check_out) : '-'}`
+          : 'Data absensi tanggal itu tidak ditemukan';
         this.loadingSuggestion = false;
       },
       error: () => { this.loadingSuggestion = false; }

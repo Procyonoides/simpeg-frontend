@@ -201,6 +201,50 @@
       </mat-card-content>
     </mat-card>
 
+    <!-- Jadwal Kerja -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title>Jadwal Kerja</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form-grid">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipe Jadwal *</mat-label>
+            <mat-select formControlName="schedule_type">
+              <mat-option value="shift">Shift Rotasi (Operator Produksi)</mat-option>
+              <mat-option value="fixed">Jam Tetap (Staf/Mandor/SPV)</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <ng-container *ngIf="form.get('schedule_type')?.value === 'fixed'">
+            <mat-form-field appearance="outline">
+              <mat-label>Jam Masuk (Senin–Jumat)</mat-label>
+              <input matInput type="time" formControlName="fixed_start_time">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Jam Pulang (Senin–Jumat)</mat-label>
+              <input matInput type="time" formControlName="fixed_end_time">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Jam Masuk Sabtu</mat-label>
+              <input matInput type="time" formControlName="fixed_saturday_start">
+              <mat-hint>Kosongkan kalau libur Sabtu</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Jam Pulang Sabtu</mat-label>
+              <input matInput type="time" formControlName="fixed_saturday_end">
+              <mat-hint>Kosongkan kalau libur Sabtu</mat-hint>
+            </mat-form-field>
+          </ng-container>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
     <!-- Actions -->
     <div class="form-actions">
       <button mat-button type="button" (click)="onCancel()">Batal</button>

@@ -10,6 +10,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 import { PortalRoutingModule } from './portal-routing.module';
 import { PortalLayoutComponent } from './layout/layout.component';
@@ -22,6 +25,7 @@ import { LeaveComponent } from './leave/leave.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { OvertimeComponent } from './overtime/overtime.component';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +53,9 @@ import { OvertimeComponent } from './overtime/overtime.component';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMatTimepickerModule
   ]
 })
 export class PortalModule { }

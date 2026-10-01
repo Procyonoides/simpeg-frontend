@@ -5,20 +5,26 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Tanggal</mat-label>
-        <input matInput type="date" formControlName="date">
+        <input matInput [matDatepicker]="dpOvertime" formControlName="date">
+        <mat-datepicker-toggle matIconSuffix [for]="dpOvertime"></mat-datepicker-toggle>
+        <mat-datepicker #dpOvertime></mat-datepicker>
       </mat-form-field>
 
       <div class="row g-2">
         <div class="col-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Jam Mulai</mat-label>
-            <input matInput type="time" formControlName="planned_start">
+            <input matInput type="text" [ngxMatTimepicker]="pickerStart" [format]="24" formControlName="planned_start" readonly>
+            <ngx-mat-timepicker-toggle matSuffix [for]="pickerStart"></ngx-mat-timepicker-toggle>
+            <ngx-mat-timepicker #pickerStart></ngx-mat-timepicker>
           </mat-form-field>
         </div>
         <div class="col-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Jam Selesai</mat-label>
-            <input matInput type="time" formControlName="planned_end">
+            <input matInput type="text" [ngxMatTimepicker]="pickerEnd" [format]="24" formControlName="planned_end" readonly>
+            <ngx-mat-timepicker-toggle matSuffix [for]="pickerEnd"></ngx-mat-timepicker-toggle>
+            <ngx-mat-timepicker #pickerEnd></ngx-mat-timepicker>
           </mat-form-field>
         </div>
       </div>
@@ -45,7 +51,7 @@
 
     <div class="overtime-row" *ngFor="let r of requests">
       <div>
-        <div class="fw-bold">{{ r.date | date:'EEEE, d MMM y' }}</div>
+        <div class="fw-bold">{{ r.date | date:'EEEE, d MMM y':'UTC' }}</div>
         <div class="text-muted small">{{ r.planned_start }} – {{ r.planned_end }} ({{ r.planned_hours }} jam)</div>
         <div class="text-muted small">{{ r.reason }}</div>
       </div>

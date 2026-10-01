@@ -68,6 +68,7 @@
                     <div *ngIf="loadingSuggestion" class="text-muted small mb-2">
                       Mengecek data absensi asli tanggal itu...
                     </div>
+                    <div *ngIf="attendanceHint" class="text-muted small mb-2">{{ attendanceHint }}</div>
                     <div class="row g-2 align-items-end">
                       <div class="col-md-3">
                         <label class="form-label small">Jam Mulai Aktual</label>
@@ -81,7 +82,9 @@
                         <label class="form-check-label small d-block">&nbsp;</label>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" [(ngModel)]="realizationForm.is_holiday" id="holidayCheck{{r.id}}">
-                          <label class="form-check-label small" for="holidayCheck{{r.id}}">Hari libur/istirahat mingguan</label>
+                          <label class="form-check-label small" for="holidayCheck{{r.id}}">
+                            Libur nasional <span class="text-muted">(Minggu otomatis dianggap hari libur)</span>
+                          </label>
                         </div>
                       </div>
                       <div class="col-md-3">

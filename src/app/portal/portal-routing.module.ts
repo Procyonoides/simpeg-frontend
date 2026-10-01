@@ -9,8 +9,8 @@ import { DetailComponent as PayslipDetailComponent } from './payslips/detail/det
 import { LeaveComponent } from './leave/leave.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { PasswordChangeGuard } from '../guards/password-change.guard';
-import { AttendanceComponent } from '../attendance/attendance.component';
-import { OvertimeComponent } from '../overtime/overtime.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { OvertimeComponent } from './overtime/overtime.component';
 
 const routes: Routes = [
   {

@@ -29,30 +29,52 @@
   <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
 
   <div class="card shadow-sm border-0 rounded-3" *ngIf="selectedEmployee">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2 py-3">
+      <div>
+        <span class="fw-semibold">{{ selectedEmployee.full_name }}</span>
+        <span class="text-muted small ms-1">({{ selectedEmployee.employee_code }})</span>
+      </div>
+      <div class="d-flex align-items-center gap-3 small text-muted">
+        <span><span class="dot dot-danger"></span> Telat / pulang cepat</span>
+      </div>
+    </div>
     <div class="card-body p-0">
       <div *ngIf="loading" class="d-flex justify-content-center py-5">
         <mat-spinner diameter="36"></mat-spinner>
       </div>
 
       <div class="table-responsive" *ngIf="!loading">
-        <table class="table table-hover align-middle mb-0">
+        <table class="table table-hover align-middle mb-0 attendance-table">
           <thead>
             <tr>
               <th>Tanggal</th>
+              <th>Shift</th>
               <th>Jam Masuk</th>
               <th>Jam Pulang</th>
-              <th>Jumlah Scan</th>
+              <th class="text-center">Jumlah Scan</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let r of records">
               <td>{{ r.attendance_date | date:'EEEE, d MMM y':'UTC' }}</td>
-              <td>{{ r.check_in | date:'HH:mm:ss':'UTC' }}</td>
-              <td>{{ r.check_out | date:'HH:mm:ss':'UTC' }}</td>
-              <td>{{ r.scan_count }}</td>
+              <td>
+                <span class="badge shift-badge" [ngClass]="'shift-' + r.shift_code">{{ r.shift_label }}</span>
+              </td>
+              <td [ngClass]="{ 'cell-warning': r.is_late }">
+                {{ r.check_in | date:'HH:mm:ss':'UTC' }}
+                <span *ngIf="r.is_late" class="small d-block">Telat {{ r.late_minutes }} menit</span>
+              </td>
+              <td [ngClass]="{ 'cell-warning': r.is_early_leave }">
+                <ng-container *ngIf="r.check_out; else noOut">
+                  {{ r.check_out | date:'HH:mm:ss':'UTC' }}
+                  <span *ngIf="r.is_early_leave" class="small d-block">Pulang cepat {{ r.early_minutes }} menit</span>
+                </ng-container>
+                <ng-template #noOut><span class="text-muted">-</span></ng-template>
+              </td>
+              <td class="text-center">{{ r.scan_count }}</td>
             </tr>
             <tr *ngIf="records.length === 0">
-              <td colspan="4" class="text-center text-muted py-4">Tidak ada data absensi di bulan ini</td>
+              <td colspan="5" class="text-center text-muted py-4">Tidak ada data absensi di bulan ini</td>
             </tr>
           </tbody>
         </table>

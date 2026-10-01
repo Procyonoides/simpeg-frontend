@@ -53,6 +53,12 @@ export class FormComponent implements OnInit {
       // Jabatan
       department_id: [''],
       position_id: [''],
+      // Jadwal kerja
+      schedule_type: ['shift'],
+      fixed_start_time: [''],
+      fixed_end_time: [''],
+      fixed_saturday_start: [''],
+      fixed_saturday_end: [''],
     });
   }
 

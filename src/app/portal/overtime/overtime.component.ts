@@ -40,10 +40,26 @@ export class OvertimeComponent implements OnInit {
     });
   }
 
+  // Datepicker ngasih objek Date (tengah malam zona lokal). Kalau langsung di-serialize
+  // (toISOString otomatis dari HttpClient), bisa mundur sehari karena dikonversi ke UTC.
+  // Jadi diformat manual pakai komponen tanggal LOKAL, bukan UTC.
+  private toDateString(d: Date): string {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   onSubmit() {
     if (this.form.invalid) return;
     this.submitting = true;
-    this.portalService.createOvertimeRequest(this.form.value).subscribe({
+
+    const payload = {
+      ...this.form.value,
+      date: this.toDateString(this.form.value.date)
+    };
+
+    this.portalService.createOvertimeRequest(payload).subscribe({
       next: () => {
         this.snackBar.open('Pengajuan lembur berhasil dikirim, menunggu persetujuan', 'Tutup', { duration: 4000 });
         this.form.reset();
