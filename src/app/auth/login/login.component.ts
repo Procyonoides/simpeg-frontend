@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    standalone: false
 })
 export class LoginComponent {
   loginForm: FormGroup;

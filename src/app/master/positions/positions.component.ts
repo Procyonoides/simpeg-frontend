@@ -5,9 +5,10 @@ import { DepartmentService } from '../../services/department.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-positions',
-  templateUrl: './positions.component.html',
-  styleUrl: './positions.component.scss'
+    selector: 'app-positions',
+    templateUrl: './positions.component.html',
+    styleUrl: './positions.component.scss',
+    standalone: false
 })
 export class PositionsComponent implements OnInit {
   positions: any[] = [];

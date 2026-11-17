@@ -7,9 +7,10 @@ import { PositionService } from '../../services/position.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrl: './form.component.scss'
+    selector: 'app-form',
+    templateUrl: './form.component.html',
+    styleUrl: './form.component.scss',
+    standalone: false
 })
 export class FormComponent implements OnInit {
   form: FormGroup;

@@ -5,9 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-departments',
-  templateUrl: './departments.component.html',
-  styleUrl: './departments.component.scss'
+    selector: 'app-departments',
+    templateUrl: './departments.component.html',
+    styleUrl: './departments.component.scss',
+    standalone: false
 })
 export class DepartmentsComponent implements OnInit {
   departments: any[] = [];

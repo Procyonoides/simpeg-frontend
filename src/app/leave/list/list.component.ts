@@ -4,9 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+    selector: 'app-list',
+    templateUrl: './list.component.html',
+    styleUrl: './list.component.scss',
+    standalone: false
 })
 export class ListComponent implements OnInit {
   leaves: any[] = [];

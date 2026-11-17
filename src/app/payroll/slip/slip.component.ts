@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PayrollService } from '../../services/payroll.service';
 
 @Component({
-  selector: 'app-payroll-slip',
-  templateUrl: './slip.component.html',
-  styleUrl: './slip.component.scss'
+    selector: 'app-payroll-slip',
+    templateUrl: './slip.component.html',
+    styleUrl: './slip.component.scss',
+    standalone: false
 })
 export class SlipComponent implements OnInit {
   slip: any = null;

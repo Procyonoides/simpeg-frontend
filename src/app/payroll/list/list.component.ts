@@ -5,9 +5,10 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-payroll-list',
-  templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+    selector: 'app-payroll-list',
+    templateUrl: './list.component.html',
+    styleUrl: './list.component.scss',
+    standalone: false
 })
 export class ListComponent implements OnInit {
   runs: any[] = [];

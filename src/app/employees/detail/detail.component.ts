@@ -4,9 +4,10 @@ import { EmployeeService } from '../../services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrl: './detail.component.scss'
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    styleUrl: './detail.component.scss',
+    standalone: false
 })
 export class DetailComponent implements OnInit {
   employee: any = null;

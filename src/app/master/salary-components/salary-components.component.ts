@@ -4,9 +4,10 @@ import { SalaryComponentService } from '../../services/salary-component.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-salary-components',
-  templateUrl: './salary-components.component.html',
-  styleUrl: './salary-components.component.scss'
+    selector: 'app-salary-components',
+    templateUrl: './salary-components.component.html',
+    styleUrl: './salary-components.component.scss',
+    standalone: false
 })
 export class SalaryComponentsComponent implements OnInit {
   components: any[] = [];
