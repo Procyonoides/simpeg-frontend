@@ -45,21 +45,27 @@
   <div class="card-body p-4">
     <h6 class="fw-bold mb-3">Riwayat Lembur</h6>
 
-    <div *ngIf="loadingHistory" class="d-flex justify-content-center py-4">
-      <mat-spinner diameter="32"></mat-spinner>
-    </div>
-
-    <div class="overtime-row" *ngFor="let r of requests">
-      <div>
-        <div class="fw-bold">{{ r.date | date:'EEEE, d MMM y':'UTC' }}</div>
-        <div class="text-muted small">{{ r.planned_start }} – {{ r.planned_end }} ({{ r.planned_hours }} jam)</div>
-        <div class="text-muted small">{{ r.reason }}</div>
+    @if (loadingHistory) {
+      <div class="d-flex justify-content-center py-4">
+        <mat-spinner diameter="32"></mat-spinner>
       </div>
-      <span class="badge" [ngClass]="statusColor(r.status)">{{ statusLabel(r.status) }}</span>
-    </div>
+    }
 
-    <div class="text-muted text-center py-3" *ngIf="!loadingHistory && requests.length === 0">
-      Belum ada pengajuan lembur.
-    </div>
+    @for (r of requests; track r) {
+      <div class="overtime-row">
+        <div>
+          <div class="fw-bold">{{ r.date | date:'EEEE, d MMM y':'UTC' }}</div>
+          <div class="text-muted small">{{ r.planned_start }} – {{ r.planned_end }} ({{ r.planned_hours }} jam)</div>
+          <div class="text-muted small">{{ r.reason }}</div>
+        </div>
+        <span class="badge" [ngClass]="statusColor(r.status)">{{ statusLabel(r.status) }}</span>
+      </div>
+    }
+
+    @if (!loadingHistory && requests.length === 0) {
+      <div class="text-muted text-center py-3">
+        Belum ada pengajuan lembur.
+      </div>
+    }
   </div>
 </div>

@@ -8,7 +8,8 @@
       </button>
     </div>
   </header>
-    <nav class="portal-nav" *ngIf="!authService.needsPasswordChange()">
+  @if (!authService.needsPasswordChange()) {
+    <nav class="portal-nav">
       <a routerLink="/portal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>home</mat-icon> Beranda
       </a>
@@ -31,6 +32,7 @@
         <mat-icon>schedule</mat-icon> Lembur
       </a>
     </nav>
+  }
   <main class="portal-content">
     <router-outlet></router-outlet>
   </main>

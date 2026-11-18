@@ -19,9 +19,11 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Karyawan *</mat-label>
               <mat-select formControlName="employee_id">
-                <mat-option *ngFor="let e of employees" [value]="e.id">
-                  {{ e.full_name }} ({{ e.employee_code }})
-                </mat-option>
+                @for (e of employees; track e) {
+                  <mat-option [value]="e.id">
+                    {{ e.full_name }} ({{ e.employee_code }})
+                  </mat-option>
+                }
               </mat-select>
               <mat-error>Wajib dipilih</mat-error>
             </mat-form-field>
@@ -39,21 +41,29 @@
             </mat-form-field>
           </div>
 
-          <div class="col-12" *ngIf="form.get('type')?.value === 'annual'">
-            <div class="balance-info" *ngIf="loadingBalance">
-              <mat-spinner diameter="16" style="display:inline-block"></mat-spinner>
-              Mengecek sisa kuota...
+          @if (form.get('type')?.value === 'annual') {
+            <div class="col-12">
+              @if (loadingBalance) {
+                <div class="balance-info">
+                  <mat-spinner diameter="16" style="display:inline-block"></mat-spinner>
+                  Mengecek sisa kuota...
+                </div>
+              }
+              @if (!loadingBalance && balance) {
+                <div class="balance-info">
+                  Sisa kuota cuti tahunan: <strong>{{ balance.remaining }}</strong> dari {{ balance.quota }} hari
+                  <span class="text-muted">
+                    (periode {{ balance.cycle_start | date:'d MMM y' }} – {{ balance.cycle_end | date:'d MMM y' }})
+                  </span>
+                </div>
+              }
+              @if (!loadingBalance && !balance && form.get('employee_id')?.value) {
+                <div class="balance-info text-muted">
+                  Pilih karyawan untuk melihat sisa kuota.
+                </div>
+              }
             </div>
-            <div class="balance-info" *ngIf="!loadingBalance && balance">
-              Sisa kuota cuti tahunan: <strong>{{ balance.remaining }}</strong> dari {{ balance.quota }} hari
-              <span class="text-muted">
-                (periode {{ balance.cycle_start | date:'d MMM y' }} – {{ balance.cycle_end | date:'d MMM y' }})
-              </span>
-            </div>
-            <div class="balance-info text-muted" *ngIf="!loadingBalance && !balance && form.get('employee_id')?.value">
-              Pilih karyawan untuk melihat sisa kuota.
-            </div>
-          </div>
+          }
 
           <div class="col-md-6">
             <mat-form-field appearance="outline" class="w-100">
@@ -79,7 +89,7 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Alasan *</mat-label>
               <textarea matInput formControlName="reason" rows="3"
-                placeholder="Jelaskan alasan pengajuan..."></textarea>
+              placeholder="Jelaskan alasan pengajuan..."></textarea>
               <mat-error>Wajib diisi</mat-error>
             </mat-form-field>
           </div>
@@ -89,8 +99,12 @@
         <div class="d-flex justify-content-end gap-2 mt-2">
           <button mat-button type="button" (click)="onCancel()">Batal</button>
           <button mat-raised-button color="primary" type="submit" [disabled]="loading">
-            <mat-spinner *ngIf="loading" diameter="18" style="display:inline-block"></mat-spinner>
-            <span *ngIf="!loading">Simpan</span>
+            @if (loading) {
+              <mat-spinner diameter="18" style="display:inline-block"></mat-spinner>
+            }
+            @if (!loading) {
+              <span>Simpan</span>
+            }
           </button>
         </div>
 

@@ -28,13 +28,17 @@
           <mat-form-field appearance="outline">
             <mat-label>NIK Karyawan *</mat-label>
             <input matInput formControlName="employee_code">
-            <mat-error *ngIf="form.get('employee_code')?.hasError('required')">Wajib diisi</mat-error>
+            @if (form.get('employee_code')?.hasError('required')) {
+              <mat-error>Wajib diisi</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Nama Lengkap *</mat-label>
             <input matInput formControlName="full_name">
-            <mat-error *ngIf="form.get('full_name')?.hasError('required')">Wajib diisi</mat-error>
+            @if (form.get('full_name')?.hasError('required')) {
+              <mat-error>Wajib diisi</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -43,7 +47,9 @@
               <mat-option value="male">Laki-laki</mat-option>
               <mat-option value="female">Perempuan</mat-option>
             </mat-select>
-            <mat-error *ngIf="form.get('gender')?.hasError('required')">Wajib dipilih</mat-error>
+            @if (form.get('gender')?.hasError('required')) {
+              <mat-error>Wajib dipilih</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -140,7 +146,9 @@
             <input matInput [matDatepicker]="dpJoin" formControlName="join_date">
             <mat-datepicker-toggle matIconSuffix [for]="dpJoin"></mat-datepicker-toggle>
             <mat-datepicker #dpJoin></mat-datepicker>
-            <mat-error *ngIf="form.get('join_date')?.hasError('required')">Wajib diisi</mat-error>
+            @if (form.get('join_date')?.hasError('required')) {
+              <mat-error>Wajib diisi</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -183,7 +191,9 @@
             <mat-label>Departemen</mat-label>
             <mat-select formControlName="department_id">
               <mat-option value="">-- Pilih Departemen --</mat-option>
-              <mat-option *ngFor="let d of departments" [value]="d.id">{{ d.name }}</mat-option>
+              @for (d of departments; track d) {
+                <mat-option [value]="d.id">{{ d.name }}</mat-option>
+              }
             </mat-select>
             <mat-hint>Opsional — bisa diisi nanti</mat-hint>
           </mat-form-field>
@@ -192,7 +202,9 @@
             <mat-label>Jabatan</mat-label>
             <mat-select formControlName="position_id" [disabled]="!form.get('department_id')?.value">
               <mat-option value="">-- Pilih Jabatan --</mat-option>
-              <mat-option *ngFor="let p of filteredPositions" [value]="p.id">{{ p.name }}</mat-option>
+              @for (p of filteredPositions; track p) {
+                <mat-option [value]="p.id">{{ p.name }}</mat-option>
+              }
             </mat-select>
             <mat-hint>{{ form.get('department_id')?.value ? 'Opsional' : 'Pilih departemen dulu' }}</mat-hint>
           </mat-form-field>
@@ -217,29 +229,26 @@
             </mat-select>
           </mat-form-field>
 
-          <ng-container *ngIf="form.get('schedule_type')?.value === 'fixed'">
+          @if (form.get('schedule_type')?.value === 'fixed') {
             <mat-form-field appearance="outline">
               <mat-label>Jam Masuk (Senin–Jumat)</mat-label>
               <input matInput type="time" formControlName="fixed_start_time">
             </mat-form-field>
-
             <mat-form-field appearance="outline">
               <mat-label>Jam Pulang (Senin–Jumat)</mat-label>
               <input matInput type="time" formControlName="fixed_end_time">
             </mat-form-field>
-
             <mat-form-field appearance="outline">
               <mat-label>Jam Masuk Sabtu</mat-label>
               <input matInput type="time" formControlName="fixed_saturday_start">
               <mat-hint>Kosongkan kalau libur Sabtu</mat-hint>
             </mat-form-field>
-
             <mat-form-field appearance="outline">
               <mat-label>Jam Pulang Sabtu</mat-label>
               <input matInput type="time" formControlName="fixed_saturday_end">
               <mat-hint>Kosongkan kalau libur Sabtu</mat-hint>
             </mat-form-field>
-          </ng-container>
+          }
 
         </div>
       </mat-card-content>
@@ -249,8 +258,12 @@
     <div class="form-actions">
       <button mat-button type="button" (click)="onCancel()">Batal</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="loading || form.invalid">
-        <mat-spinner *ngIf="loading" diameter="18" style="display:inline-block"></mat-spinner>
-        <span *ngIf="!loading">{{ editMode ? 'Update' : 'Simpan' }}</span>
+        @if (loading) {
+          <mat-spinner diameter="18" style="display:inline-block"></mat-spinner>
+        }
+        @if (!loading) {
+          <span>{{ editMode ? 'Update' : 'Simpan' }}</span>
+        }
       </button>
     </div>
 

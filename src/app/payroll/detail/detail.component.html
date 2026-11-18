@@ -6,11 +6,13 @@
     </button>
   </div>
 
-  <div *ngIf="loading" class="d-flex justify-content-center py-5">
-    <mat-spinner diameter="36"></mat-spinner>
-  </div>
+  @if (loading) {
+    <div class="d-flex justify-content-center py-5">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  }
 
-  <ng-container *ngIf="!loading && run">
+  @if (!loading && run) {
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
         <h5 class="fw-bold mb-1">Payroll {{ monthName(run.month) }} {{ run.year }}</h5>
@@ -28,7 +30,6 @@
         </button>
       </div>
     </div>
-
     <div class="card shadow-sm border-0 rounded-3">
       <div class="card-body p-0">
         <div class="table-responsive">
@@ -45,42 +46,47 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of items">
-                <td>{{ item.employee_name }} <span class="text-muted small">({{ item.employee_code }})</span></td>
-                <td>{{ item.position_name || '-' }}</td>
-                <td>Rp {{ item.basic_salary | number:'1.0-0' }}</td>
-                <td class="text-success">+ Rp {{ item.total_additions | number:'1.0-0' }}</td>
-                <td class="text-danger">
-                  - Rp {{ totalBpjsPph21(item) | number:'1.0-0' }}
-                </td>
-                <td class="fw-bold">Rp {{ item.net_salary | number:'1.0-0' }}</td>
-                <td class="text-end">
-                  <button mat-icon-button (click)="viewSlip(item.id)" matTooltip="Lihat Slip">
-                    <mat-icon>receipt_long</mat-icon>
-                  </button>
-                </td>
-              </tr>
-              <tr *ngIf="items.length === 0">
-                <td colspan="7" class="text-center text-muted py-4">Belum ada data</td>
-              </tr>
+              @for (item of items; track item) {
+                <tr>
+                  <td>{{ item.employee_name }} <span class="text-muted small">({{ item.employee_code }})</span></td>
+                  <td>{{ item.position_name || '-' }}</td>
+                  <td>Rp {{ item.basic_salary | number:'1.0-0' }}</td>
+                  <td class="text-success">+ Rp {{ item.total_additions | number:'1.0-0' }}</td>
+                  <td class="text-danger">
+                    - Rp {{ totalBpjsPph21(item) | number:'1.0-0' }}
+                  </td>
+                  <td class="fw-bold">Rp {{ item.net_salary | number:'1.0-0' }}</td>
+                  <td class="text-end">
+                    <button mat-icon-button (click)="viewSlip(item.id)" matTooltip="Lihat Slip">
+                      <mat-icon>receipt_long</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+              @if (items.length === 0) {
+                <tr>
+                  <td colspan="7" class="text-center text-muted py-4">Belum ada data</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
-
-        <div class="d-flex justify-content-between align-items-center p-3" *ngIf="pagination.totalPages > 1">
-          <span class="text-muted small">
-            Halaman {{ pagination.page }} dari {{ pagination.totalPages }}
-          </span>
-          <div>
-            <button mat-stroked-button [disabled]="pagination.page <= 1" (click)="prevPage()">
-              <mat-icon>chevron_left</mat-icon> Sebelumnya
-            </button>
-            <button mat-stroked-button class="ms-2" [disabled]="pagination.page >= pagination.totalPages" (click)="nextPage()">
-              Berikutnya <mat-icon>chevron_right</mat-icon>
-            </button>
+        @if (pagination.totalPages > 1) {
+          <div class="d-flex justify-content-between align-items-center p-3">
+            <span class="text-muted small">
+              Halaman {{ pagination.page }} dari {{ pagination.totalPages }}
+            </span>
+            <div>
+              <button mat-stroked-button [disabled]="pagination.page <= 1" (click)="prevPage()">
+                <mat-icon>chevron_left</mat-icon> Sebelumnya
+              </button>
+              <button mat-stroked-button class="ms-2" [disabled]="pagination.page >= pagination.totalPages" (click)="nextPage()">
+                Berikutnya <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
-  </ng-container>
+  }
 </div>

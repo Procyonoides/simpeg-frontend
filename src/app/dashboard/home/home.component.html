@@ -5,46 +5,62 @@
   </div>
 
   <div class="stats-grid">
-    <mat-card class="stat-card" *ngFor="let stat of stats">
-      <div class="stat-icon" [style.background]="stat.color + '1a'">
-        <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
-      </div>
-      <div class="stat-info">
-        <div class="stat-value">{{ stat.value }}</div>
-        <div class="stat-label">{{ stat.label }}</div>
-        <div class="stat-note text-muted" *ngIf="!stat.available">Modul belum tersedia</div>
-      </div>
-    </mat-card>
+    @for (stat of stats; track stat) {
+      <mat-card class="stat-card">
+        <div class="stat-icon" [style.background]="stat.color + '1a'">
+          <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+          @if (!stat.available) {
+            <div class="stat-note text-muted">Modul belum tersedia</div>
+          }
+        </div>
+      </mat-card>
+    }
   </div>
 
   <div class="dashboard-panels">
     <mat-card class="panel">
       <div class="panel-title">Karyawan per Departemen</div>
-      <div class="panel-body" *ngIf="!loading">
-        <div class="dept-row" *ngFor="let d of departmentBreakdown">
-          <span>{{ d.department_name }}</span>
-          <span class="fw-bold">{{ d.total }}</span>
+      @if (!loading) {
+        <div class="panel-body">
+          @for (d of departmentBreakdown; track d) {
+            <div class="dept-row">
+              <span>{{ d.department_name }}</span>
+              <span class="fw-bold">{{ d.total }}</span>
+            </div>
+          }
+          @if (departmentBreakdown.length === 0) {
+            <div class="text-muted small">
+              Belum ada data jabatan/departemen karyawan.
+            </div>
+          }
         </div>
-        <div class="text-muted small" *ngIf="departmentBreakdown.length === 0">
-          Belum ada data jabatan/departemen karyawan.
-        </div>
-      </div>
+      }
     </mat-card>
 
     <mat-card class="panel">
       <div class="panel-title">Pengajuan Cuti Terbaru</div>
-      <div class="panel-body" *ngIf="!loading">
-        <div class="leave-row" *ngFor="let l of recentLeave">
-          <div>
-            <div class="fw-bold">{{ l.full_name }}</div>
-            <div class="text-muted small">{{ l.type }} — {{ l.start_date | date:'d MMM' }} s/d {{ l.end_date | date:'d MMM y' }}</div>
-          </div>
-          <span class="badge" [ngClass]="leaveStatusColor(l.status)">{{ l.status }}</span>
+      @if (!loading) {
+        <div class="panel-body">
+          @for (l of recentLeave; track l) {
+            <div class="leave-row">
+              <div>
+                <div class="fw-bold">{{ l.full_name }}</div>
+                <div class="text-muted small">{{ l.type }} — {{ l.start_date | date:'d MMM' }} s/d {{ l.end_date | date:'d MMM y' }}</div>
+              </div>
+              <span class="badge" [ngClass]="leaveStatusColor(l.status)">{{ l.status }}</span>
+            </div>
+          }
+          @if (recentLeave.length === 0) {
+            <div class="text-muted small">
+              Belum ada pengajuan cuti.
+            </div>
+          }
         </div>
-        <div class="text-muted small" *ngIf="recentLeave.length === 0">
-          Belum ada pengajuan cuti.
-        </div>
-      </div>
+      }
     </mat-card>
   </div>
 </div>

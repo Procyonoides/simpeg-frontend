@@ -5,7 +5,9 @@
     <div class="row g-2 mb-3">
       <div class="col-6">
         <select class="form-select" [(ngModel)]="month" (change)="load()">
-          <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+          @for (m of months; track m) {
+            <option [value]="m.value">{{ m.label }}</option>
+          }
         </select>
       </div>
       <div class="col-6">
@@ -13,23 +15,31 @@
       </div>
     </div>
 
-    <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
 
-    <div *ngIf="loading" class="d-flex justify-content-center py-4">
-      <mat-spinner diameter="32"></mat-spinner>
-    </div>
-
-    <div class="attendance-row" *ngFor="let r of records">
-      <div>
-        <div class="fw-bold">{{ r.attendance_date | date:'EEEE, d MMM y':'UTC' }}</div>
+    @if (loading) {
+      <div class="d-flex justify-content-center py-4">
+        <mat-spinner diameter="32"></mat-spinner>
       </div>
-      <div class="text-end">
-        <div>{{ r.check_in | date:'HH:mm':'UTC' }} – {{ r.check_out | date:'HH:mm':'UTC' }}</div>
-      </div>
-    </div>
+    }
 
-    <div class="text-muted text-center py-3" *ngIf="!loading && records.length === 0">
-      Tidak ada data absensi di bulan ini.
-    </div>
+    @for (r of records; track r) {
+      <div class="attendance-row">
+        <div>
+          <div class="fw-bold">{{ r.attendance_date | date:'EEEE, d MMM y':'UTC' }}</div>
+        </div>
+        <div class="text-end">
+          <div>{{ r.check_in | date:'HH:mm':'UTC' }} – {{ r.check_out | date:'HH:mm':'UTC' }}</div>
+        </div>
+      </div>
+    }
+
+    @if (!loading && records.length === 0) {
+      <div class="text-muted text-center py-3">
+        Tidak ada data absensi di bulan ini.
+      </div>
+    }
   </div>
 </div>
