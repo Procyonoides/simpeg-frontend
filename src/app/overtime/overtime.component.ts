@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { OvertimeService } from '../services/overtime.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-overtime',
   standalone: false,
   templateUrl: './overtime.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './overtime.component.scss'
 })
 export class OvertimeComponent implements OnInit {

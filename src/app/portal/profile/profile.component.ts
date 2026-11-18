@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PortalService } from '../../services/portal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-profile',
   standalone: false,
   templateUrl: './profile.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {

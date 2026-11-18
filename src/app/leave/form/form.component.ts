@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LeaveService } from '../../services/leave.service';
@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     selector: 'app-form',
     templateUrl: './form.component.html',
     styleUrl: './form.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class FormComponent implements OnInit {

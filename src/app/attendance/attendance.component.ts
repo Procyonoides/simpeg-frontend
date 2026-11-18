@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeService } from '../services/employee.service';
 import { Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   selector: 'app-attendance',
   standalone: false,
   templateUrl: './attendance.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './attendance.component.scss'
 })
 export class AttendanceComponent implements OnInit {

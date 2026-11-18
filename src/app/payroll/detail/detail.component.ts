@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PayrollService } from '../../services/payroll.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-payroll-detail',
   standalone: false,
   templateUrl: './detail.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './detail.component.scss'
 })
 export class DetailComponent implements OnInit {

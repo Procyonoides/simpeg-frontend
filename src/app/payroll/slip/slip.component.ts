@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PayrollService } from '../../services/payroll.service';
 
@@ -6,6 +6,7 @@ import { PayrollService } from '../../services/payroll.service';
     selector: 'app-payroll-slip',
     templateUrl: './slip.component.html',
     styleUrl: './slip.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SlipComponent implements OnInit {

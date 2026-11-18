@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PortalService } from '../../../services/portal.service';
 
@@ -6,6 +6,7 @@ import { PortalService } from '../../../services/portal.service';
   selector: 'app-list',
   standalone: false,
   templateUrl: './list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './list.component.scss'
 })
 export class ListComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PositionService } from '../../services/position.service';
 import { DepartmentService } from '../../services/department.service';
@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     selector: 'app-positions',
     templateUrl: './positions.component.html',
     styleUrl: './positions.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PositionsComponent implements OnInit {

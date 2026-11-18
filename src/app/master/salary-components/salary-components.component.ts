@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SalaryComponentService } from '../../services/salary-component.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     selector: 'app-salary-components',
     templateUrl: './salary-components.component.html',
     styleUrl: './salary-components.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SalaryComponentsComponent implements OnInit {

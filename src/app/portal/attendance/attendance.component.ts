@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PortalService } from '../../services/portal.service';
 
 @Component({
   selector: 'app-attendance',
   standalone: false,
   templateUrl: './attendance.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './attendance.component.scss'
 })
 export class AttendanceComponent implements OnInit {

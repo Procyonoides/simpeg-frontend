@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PortalService } from '../../services/portal.service';
 
 @Component({
   selector: 'app-directory',
   standalone: false,
   templateUrl: './directory.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './directory.component.scss'
 })
 export class DirectoryComponent implements OnInit {

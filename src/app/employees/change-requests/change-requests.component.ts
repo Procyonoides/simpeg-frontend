@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ProfileRequestsService } from '../../services/profile-requests.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-change-requests',
   standalone: false,
   templateUrl: './change-requests.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './change-requests.component.scss'
 })
 export class ChangeRequestsComponent implements OnInit {

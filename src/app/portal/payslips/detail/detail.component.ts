@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PortalService } from '../../../services/portal.service';
 
@@ -6,6 +6,7 @@ import { PortalService } from '../../../services/portal.service';
   selector: 'app-detail',
   standalone: false,
   templateUrl: './detail.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './detail.component.scss'
 })
 export class DetailComponent implements OnInit {
